@@ -48,7 +48,7 @@ const dummy = new Object3D()
  * that floor, not for looks alone.
  */
 /** Desktop sphere size. Mobile shrinks via `TOUCH_NODE_SCALE`. */
-const NODE_RADIUS = 0.115
+const NODE_RADIUS = 0.13
 /** Flat stars — a bit larger than spheres so tips survive the halftone. */
 const STAR_OUTER = NODE_RADIUS * 1.35
 const DUST_COUNT = 6000
@@ -120,11 +120,11 @@ function staggered(raw: number, delay: number) {
 }
 
 /**
- * Mobile-only size. Desktop keeps full `NODE_RADIUS` / `STAR_OUTER`.
- * Stars get a bump so 4/5-point tips stay readable vs spheres.
+ * Mobile-only size (relative to desktop geo). Stars bumped so tips stay readable.
+ * Tuned so mobile world size stays ~same after the desktop radius bump.
  */
-const TOUCH_NODE_SCALE = 0.8
-const TOUCH_STAR_SCALE = 1.05
+const TOUCH_NODE_SCALE = 0.71
+const TOUCH_STAR_SCALE = 0.93
 
 const FIELD_BOUNDS = new Sphere(new Vector3(0, 0, 0), 60)
 

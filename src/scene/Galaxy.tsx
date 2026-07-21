@@ -123,12 +123,12 @@ function staggered(raw: number, delay: number) {
 
 /**
  * Mobile-only size (relative to desktop geo).
- * Tuned so mobile world size stays ~same after the desktop radius bump.
+ * Near 1 so finger hits land — earlier ~0.58 made stars nearly untappable.
  */
-const TOUCH_NODE_SCALE = 0.58
-const TOUCH_STAR4_SCALE = 0.76
+const TOUCH_NODE_SCALE = 0.95
+const TOUCH_STAR4_SCALE = 1.05
 /** Keep 5-point stars reading larger than 4-point on touch too. */
-const TOUCH_STAR5_SCALE = 0.85
+const TOUCH_STAR5_SCALE = 1.15
 
 const FIELD_BOUNDS = new Sphere(new Vector3(0, 0, 0), 60)
 
@@ -155,8 +155,14 @@ export function Galaxy({
   const dust = useMemo(() => buildDust(dustCount), [dustCount])
   const shell = useMemo(() => buildStarShell(shellCount), [shellCount])
 
-  const star4 = useMemo(() => regularStarShape(4, STAR4_OUTER), [])
-  const star5 = useMemo(() => regularStarShape(5, STAR5_OUTER), [])
+  const star4 = useMemo(
+    () => regularStarShape(4, STAR4_OUTER * (touch ? 1.45 : 1)),
+    [touch],
+  )
+  const star5 = useMemo(
+    () => regularStarShape(5, STAR5_OUTER * (touch ? 1.45 : 1)),
+    [touch],
+  )
 
   /** Global layout indices partitioned by experience kind. */
   const groups = useMemo(() => {
@@ -446,8 +452,10 @@ export function Galaxy({
       setHovered(null)
       document.body.style.cursor = ''
     },
-    onClick: (e: ThreeEvent<MouseEvent>) => {
+    // pointerdown: more reliable than click on touch (no ghost-click miss).
+    onPointerDown: (e: ThreeEvent<PointerEvent>) => {
       if (!interactive) return
+      if (e.pointerType === 'mouse' && e.button !== 0) return
       const global = indices[e.instanceId!]
       if (!pickable(global)) return
       e.stopPropagation()
@@ -470,7 +478,7 @@ export function Galaxy({
           frustumCulled={false}
           {...sphereHandlers}
         >
-          <sphereGeometry args={[NODE_RADIUS, 12, 12]} />
+          <sphereGeometry args={[NODE_RADIUS * (touch ? 1.55 : 1), 12, 12]} />
           <meshBasicMaterial color="#ffffff" />
         </instancedMesh>
       ) : null}

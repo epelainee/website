@@ -3,10 +3,9 @@ import { useStore } from '../state/store'
 import { byId } from '../data/experiences'
 import { useContent } from '../content/useContent'
 
-/** Soft rise + dissolve — matches NamePlate / NavRing settle. */
+/** Soft rise — opacity + transform only (filter blur transitions flake on Windows). */
 const PANEL_MS = 520
 const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
-const DISSOLVE_BLUR = '14px'
 
 function prefersReducedMotion(): boolean {
   return (
@@ -44,9 +43,15 @@ export function DetailPanel() {
         setOpen(true)
         return
       }
-      // Next frame so the dematerialised styles paint before we open.
-      const raf = requestAnimationFrame(() => setOpen(true))
-      return () => cancelAnimationFrame(raf)
+      // Double rAF: closed styles must paint before open, or Windows skips the transition.
+      let raf2 = 0
+      const raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => setOpen(true))
+      })
+      return () => {
+        cancelAnimationFrame(raf1)
+        cancelAnimationFrame(raf2)
+      }
     }
 
     setOpen(false)
@@ -91,7 +96,6 @@ export function DetailPanel() {
         borderRadius: '4px',
         zIndex: 40,
         opacity: open ? 1 : 0,
-        filter: open ? 'blur(0)' : `blur(${DISSOLVE_BLUR})`,
         transform: open
           ? 'translateY(0) scale(1)'
           : 'translateY(14px) scale(0.96)',
@@ -101,7 +105,6 @@ export function DetailPanel() {
           ? undefined
           : [
               `opacity ${PANEL_MS}ms ${EASE}`,
-              `filter ${PANEL_MS}ms ${EASE}`,
               `transform ${PANEL_MS}ms ${EASE}`,
             ].join(', '),
       }}

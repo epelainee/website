@@ -10,7 +10,7 @@ import { useContent } from '../content/useContent'
  * occlude it — `Core` projects world origin into `#hub-hotspot` each frame.
  *
  * Intro uses a larger hit area to match the collapsed star; galaxy stays tight
- * on the small core. Galaxy hover shows a filter tooltip.
+ * on the small core. No hover tooltips — aria-label covers the affordance.
  */
 export function HubHotspot() {
   const { siteSettings } = useContent()
@@ -21,13 +21,10 @@ export function HubHotspot() {
   const tips = siteSettings.hubTips
 
   const intro = phase === 'intro'
-  const galaxy = phase === 'galaxy'
-  const active = intro || galaxy
+  const active = intro || phase === 'galaxy'
   // Intro star fills more of the screen than the settled core.
   const rem = intro ? 9 : 4.5
   const half = intro ? -4.5 : -2.25
-
-  const tip = ringOpen ? tips.hideFilters : tips.filterByCategory
 
   return (
     <button
@@ -62,18 +59,15 @@ export function HubHotspot() {
         borderRadius: '50%',
         background: 'transparent',
         border: 'none',
+        outline: 'none',
+        boxShadow: 'none',
         padding: 0,
         transform: 'translate(-999px, -999px)',
         pointerEvents: active ? 'auto' : 'none',
         cursor: 'pointer',
         zIndex: 26,
+        WebkitTapHighlightColor: 'transparent',
       }}
-    >
-      {galaxy ? (
-        <span className="hub-tooltip" aria-hidden="true">
-          {tip}
-        </span>
-      ) : null}
-    </button>
+    />
   )
 }

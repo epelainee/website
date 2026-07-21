@@ -119,7 +119,7 @@ export function SocialIconRow({ gap = '0.85rem' }: { gap?: string }) {
 
 /**
  * Intro: top-right icon row (wide) or under identity (compact).
- * Galaxy: bottom-left icons.
+ * Galaxy: bottom-left icons on wide only — compact shows name alone.
  * Dissolves with burst / detail panel.
  */
 export function SocialLinks() {
@@ -158,30 +158,33 @@ export function SocialLinks() {
         </nav>
       )}
 
-      <nav
-        aria-label="Social links"
-        aria-hidden={!galaxyVisible}
-        style={{
-          position: 'fixed',
-          left: 'max(1.5rem, env(safe-area-inset-left))',
-          bottom: 'max(1.5rem, env(safe-area-inset-bottom))',
-          zIndex: 20,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.85rem',
-          pointerEvents: galaxyVisible ? 'auto' : 'none',
-          opacity: galaxyVisible ? 1 : 0,
-          filter: galaxyVisible ? 'blur(0)' : `blur(${DISSOLVE_BLUR})`,
-          transform: galaxyVisible ? 'translateY(0)' : 'translateY(6px)',
-          transition: [
-            `opacity ${PANEL_MS}ms ${EASE}`,
-            `filter ${PANEL_MS}ms ${EASE}`,
-            `transform ${PANEL_MS}ms ${EASE}`,
-          ].join(', '),
-        }}
-      >
-        <SocialIconRow />
-      </nav>
+      {/* Wide galaxy only — compact keeps name alone (no icons). */}
+      {!compact && (
+        <nav
+          aria-label="Social links"
+          aria-hidden={!galaxyVisible}
+          style={{
+            position: 'fixed',
+            left: 'max(1.5rem, env(safe-area-inset-left))',
+            bottom: 'max(1.5rem, env(safe-area-inset-bottom))',
+            zIndex: 20,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.85rem',
+            pointerEvents: galaxyVisible ? 'auto' : 'none',
+            opacity: galaxyVisible ? 1 : 0,
+            filter: galaxyVisible ? 'blur(0)' : `blur(${DISSOLVE_BLUR})`,
+            transform: galaxyVisible ? 'translateY(0)' : 'translateY(6px)',
+            transition: [
+              `opacity ${PANEL_MS}ms ${EASE}`,
+              `filter ${PANEL_MS}ms ${EASE}`,
+              `transform ${PANEL_MS}ms ${EASE}`,
+            ].join(', '),
+          }}
+        >
+          <SocialIconRow />
+        </nav>
+      )}
     </>
   )
 }

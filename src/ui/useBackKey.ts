@@ -7,7 +7,8 @@ import { useStore } from '../state/store'
  *
  * Lives on `window` so it works regardless of focus, but stands down when the
  * target is editable. Backspace is prevented as a defence against browsers
- * that still treat it as history-back.
+ * that still treat it as history-back. Blurs focus so Esc never leaves a
+ * focus ring on the circular hub hotspot.
  */
 export function useBackKey() {
   const back = useStore((s) => s.back)
@@ -24,6 +25,8 @@ export function useBackKey() {
         return
 
       if (e.key === 'Backspace') e.preventDefault()
+      const active = document.activeElement
+      if (active instanceof HTMLElement) active.blur()
       back()
     }
     window.addEventListener('keydown', onKey)

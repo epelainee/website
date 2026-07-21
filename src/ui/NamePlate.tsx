@@ -137,21 +137,33 @@ export function NamePlate() {
         aria-hidden={!settledVisible}
         style={{
           ...chrome,
-          left: '50%',
-          // Compact: sit above icons + BACK so the long name never collides.
-          // Wide: share the bottom chrome band with side chrome.
-          bottom: compact
-            ? 'max(3.75rem, calc(env(safe-area-inset-bottom) + 3.25rem))'
-            : 'max(1.75rem, calc(env(safe-area-inset-bottom) + 1.25rem))',
-          transform: settledVisible
-            ? 'translateX(-50%) translateY(0)'
-            : 'translateX(-50%) translateY(8px)',
+          // Compact galaxy: name left, no socials. Wide: centred bottom.
+          ...(compact
+            ? {
+                left: 'max(1.25rem, env(safe-area-inset-left))',
+                right: 'max(5.5rem, env(safe-area-inset-right))',
+                bottom:
+                  'max(1.25rem, calc(env(safe-area-inset-bottom) + 0.25rem))',
+                transform: settledVisible
+                  ? 'translateY(0)'
+                  : 'translateY(8px)',
+                alignItems: 'flex-start' as const,
+                textAlign: 'left' as const,
+              }
+            : {
+                left: '50%',
+                bottom:
+                  'max(1.75rem, calc(env(safe-area-inset-bottom) + 1.25rem))',
+                transform: settledVisible
+                  ? 'translateX(-50%) translateY(0)'
+                  : 'translateX(-50%) translateY(8px)',
+                alignItems: 'center' as const,
+                textAlign: 'center' as const,
+              }),
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          textAlign: 'center',
-          maxWidth: compact ? 'min(92vw, 22rem)' : 'min(72vw, 20rem)',
-          padding: '0 0.75rem',
+          maxWidth: compact ? 'min(70vw, 18rem)' : 'min(72vw, 20rem)',
+          padding: compact ? 0 : '0 0.75rem',
           opacity: settledVisible ? 1 : 0,
           filter: settledVisible ? 'blur(0)' : `blur(${DISSOLVE_BLUR})`,
           transition: [

@@ -1,6 +1,11 @@
 # Pages CMS — https://pagescms.org
 # Edit categories, subcategories, experiences, and site chrome via GitHub.
 
+media:
+  input: public/media
+  output: /media
+  extensions: [png, jpg, jpeg, webp, svg, ico, gif]
+
 content:
   - name: categories
     label: Categories
@@ -157,9 +162,23 @@ content:
       - name: pageTitle
         label: Page title
         type: string
+        description: Browser tab + embed title.
       - name: pageDescription
         label: Page description
         type: text
+        description: Meta description + embed subtitle.
+      - name: siteUrl
+        label: Site URL
+        type: string
+        description: Absolute origin for embeds (e.g. https://epelainee.com). Needed so og:image resolves.
+      - name: favicon
+        label: Favicon
+        type: image
+        description: Browser tab icon. Upload PNG/SVG/ICO.
+      - name: ogImage
+        label: Embed image
+        type: image
+        description: Open Graph / Twitter preview image (1200×630 recommended).
       - name: socialLinks
         label: Social links
         type: object

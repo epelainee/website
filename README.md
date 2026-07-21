@@ -37,7 +37,8 @@ npm run build
 | `content/categories/*.json` | Top-level categories |
 | `content/subcategories/*.json` | Subs (reference a category id) |
 | `content/experiences/*.json` | Experience nodes |
-| `content/site-settings.json` | Name, tagline, socials, meta, placeholders |
+| `content/site-settings.json` | Name, tagline, socials, favicon, embed meta, placeholders |
+| `public/media/` | CMS uploads (favicon, og image) |
 | `.pages.yml` | Pages CMS field schema |
 
 Types/helpers stay in `src/data/`; the arrays themselves are no longer in TypeScript.

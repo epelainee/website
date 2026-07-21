@@ -16,6 +16,12 @@ export type SiteSettings = {
   tagline: string
   pageTitle: string
   pageDescription: string
+  /** Absolute site origin for embed previews, e.g. https://example.com */
+  siteUrl: string
+  /** Public path or absolute URL for the favicon. */
+  favicon: string
+  /** Public path or absolute URL for Open Graph / Twitter card image. */
+  ogImage: string
   socialLinks: SocialLink[]
   placeholders: {
     org: string

@@ -59,8 +59,8 @@ export default function App() {
       <SocialLinks />
       <LocalClock />
 
-      {/* Intro cue. Dematerialises with the burst; only the star hotspot bursts. */}
-      <p
+      {/* Intro cue + copyright. Dematerialises with the burst. */}
+      <div
         aria-hidden={phase !== 'intro'}
         style={{
           position: 'fixed',
@@ -80,14 +80,11 @@ export default function App() {
                 bottom: 'max(1.25rem, env(safe-area-inset-bottom))',
               }),
           zIndex: 20,
-          margin: 0,
-          font: '400 0.625rem/1 var(--mono)',
-          letterSpacing: '0.14em',
-          textTransform: 'uppercase',
-          color: 'rgba(255, 255, 255, 0.9)',
-          textShadow: '0 0 8px #000',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.45rem',
+          alignItems: compact ? 'flex-start' : 'flex-end',
           pointerEvents: 'none',
-          whiteSpace: 'nowrap',
           opacity: phase === 'intro' ? 1 : 0,
           filter: phase === 'intro' ? 'blur(0)' : 'blur(6px)',
           transition: [
@@ -96,8 +93,32 @@ export default function App() {
           ].join(', '),
         }}
       >
-        {coarse ? 'Tap' : 'Click'} the star to explore!
-      </p>
+        <p
+          style={{
+            margin: 0,
+            font: '400 0.625rem/1 var(--mono)',
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: 'rgba(255, 255, 255, 0.9)',
+            textShadow: '0 0 8px #000',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {coarse ? 'Tap' : 'Click'} the star to explore!
+        </p>
+        <p
+          style={{
+            margin: 0,
+            font: '400 0.5625rem/1 var(--mono)',
+            letterSpacing: '0.06em',
+            color: 'rgba(255, 255, 255, 0.55)',
+            textShadow: '0 0 8px #000',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          ©️ 2026 Elizabeth Patricia Elaine
+        </p>
+      </div>
 
       {/* Desktop keyboard hint. */}
       {galaxyChrome && !coarse && (

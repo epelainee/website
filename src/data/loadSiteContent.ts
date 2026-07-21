@@ -52,6 +52,18 @@ function asIcon(v: string | undefined): SocialIcon {
   return 'other'
 }
 
+/** Pages CMS image fields usually store a public path string; tolerate objects too. */
+function asMediaPath(v: unknown, fallback = ''): string {
+  if (typeof v === 'string') return v.trim() || fallback
+  if (v && typeof v === 'object') {
+    const o = v as { path?: unknown; src?: unknown; url?: unknown }
+    for (const key of [o.path, o.src, o.url] as const) {
+      if (typeof key === 'string' && key.trim()) return key.trim()
+    }
+  }
+  return fallback
+}
+
 function asKind(v: string | undefined): ExperienceKind | undefined {
   if (v === 'internship' || v === 'certification') return v
   return undefined
@@ -69,6 +81,9 @@ function loadSiteSettings(): SiteSettings {
   }))
   return {
     ...first,
+    siteUrl: first.siteUrl?.trim() ?? '',
+    favicon: asMediaPath(first.favicon, '/favicon.svg'),
+    ogImage: asMediaPath(first.ogImage),
     socialLinks,
   }
 }

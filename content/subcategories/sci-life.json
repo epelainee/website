@@ -1,6 +1,6 @@
 {
-  "id": "sci-life",
-  "label": "Life Sciences",
+  "id": "sci-phys",
+  "label": "Physical Sciences",
   "order": 1,
   "category": "science"
 }

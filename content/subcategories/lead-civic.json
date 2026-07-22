@@ -1,6 +1,6 @@
 {
-  "id": "lead-civic",
-  "label": "Civic & Ceremonial",
-  "order": 3,
-  "category": "leadership"
+  "id": "lead-awards",
+  "label": "Awards",
+  "order": 0,
+  "category": "athletics"
 }

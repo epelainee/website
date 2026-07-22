@@ -1,6 +1,6 @@
 {
-  "id": "sci-phys",
-  "label": "Physical Sciences",
+  "id": "sci-quant",
+  "label": "Quantitative Sciences",
   "order": 1,
   "category": "science"
 }

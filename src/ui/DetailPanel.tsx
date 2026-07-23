@@ -22,15 +22,14 @@ function prefersReducedMotion(): boolean {
  * touched by the halftone pass.
  *
  * Format: position → company → dates → location → description.
- * Empty dates/location/blurb show placeholders so the layout is visible while data fills in.
+ * Empty optional fields are omitted so the card stays compact.
  *
  * Escape closes it via `useBackKey` (layered back ladder).
  */
 export function DetailPanel() {
-  const { experiences, siteSettings } = useContent()
+  const { experiences } = useContent()
   const selectedId = useStore((s) => s.selectedId)
   const select = useStore((s) => s.select)
-  const ph = siteSettings.placeholders
 
   // Keep last id while dematerialising so exit has content to dissolve.
   const [heldId, setHeldId] = useState<string | null>(null)
@@ -67,12 +66,10 @@ export function DetailPanel() {
   if (!exp) return null
 
   const reduced = prefersReducedMotion()
-  const dates = exp.dates.trim() || ph.dates
-  const location = exp.location.trim() || ph.location
-  const blurb = exp.blurb.trim() || ph.blurb
-  const datesPlaceholder = !exp.dates.trim()
-  const locationPlaceholder = !exp.location.trim()
-  const blurbPlaceholder = !exp.blurb.trim()
+  const org = exp.org.trim()
+  const dates = exp.dates.trim()
+  const location = exp.location.trim()
+  const blurb = exp.blurb.trim()
 
   return (
     <aside
@@ -135,43 +132,48 @@ export function DetailPanel() {
       </h1>
 
       {/* company */}
-      <p style={{ font: '400 0.875rem/1.4 var(--mono)', color: 'var(--dim)' }}>
-        {exp.org || ph.org}
-      </p>
+      {org ? (
+        <p style={{ font: '400 0.875rem/1.4 var(--mono)', color: 'var(--dim)' }}>
+          {org}
+        </p>
+      ) : null}
 
       {/* month year started – month year ended */}
-      <p
-        style={{
-          font: '400 0.75rem/1.4 var(--mono)',
-          color: datesPlaceholder ? 'rgba(255,255,255,0.35)' : 'var(--dim)',
-          fontStyle: datesPlaceholder ? 'italic' : undefined,
-        }}
-      >
-        {dates}
-      </p>
+      {dates ? (
+        <p
+          style={{
+            font: '400 0.75rem/1.4 var(--mono)',
+            color: 'var(--dim)',
+          }}
+        >
+          {dates}
+        </p>
+      ) : null}
 
       {/* location */}
-      <p
-        style={{
-          font: '400 0.75rem/1.4 var(--mono)',
-          color: locationPlaceholder ? 'rgba(255,255,255,0.35)' : 'var(--dim)',
-          fontStyle: locationPlaceholder ? 'italic' : undefined,
-        }}
-      >
-        {location}
-      </p>
+      {location ? (
+        <p
+          style={{
+            font: '400 0.75rem/1.4 var(--mono)',
+            color: 'var(--dim)',
+          }}
+        >
+          {location}
+        </p>
+      ) : null}
 
       {/* text description */}
-      <p
-        style={{
-          font: '400 0.9375rem/1.55 var(--sans)',
-          marginTop: '0.35rem',
-          color: blurbPlaceholder ? 'rgba(255,255,255,0.4)' : 'var(--fg)',
-          fontStyle: blurbPlaceholder ? 'italic' : undefined,
-        }}
-      >
-        {blurb}
-      </p>
+      {blurb ? (
+        <p
+          style={{
+            font: '400 0.9375rem/1.55 var(--sans)',
+            marginTop: '0.35rem',
+            color: 'var(--fg)',
+          }}
+        >
+          {blurb}
+        </p>
+      ) : null}
 
       {exp.links?.length ? (
         <ul style={{ listStyle: 'none', marginTop: '0.25rem' }}>

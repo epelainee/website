@@ -26,6 +26,7 @@ import {
   fieldPoint,
 } from './galaxyLayout'
 import { regularStarShape } from './starShape'
+import { subcategoriesMatchPath } from '../data/experiences'
 import { CRUSH_DURATION, useStore } from '../state/store'
 import { crush } from './crush'
 import { NodeLabel } from '../ui/NodeLabel'
@@ -236,12 +237,8 @@ export function Galaxy({
    * one is picked. One predicate drives both the fade animation and picking, so
    * a faded-out node can never answer the pointer.
    */
-  const matches = (cat: string, sub: string) => {
-    if (path.length === 0) return true
-    if (path[0] !== cat) return false
-    if (path.length === 1) return true
-    return path[1] === sub
-  }
+  const matches = (node: (typeof layout)[number]) =>
+    subcategoriesMatchPath(node.subcategories, path, categories)
 
   /** Per-node filter visibility, eased toward 0 or 1 so filtering is not a jump cut. */
   const shown = useMemo(
@@ -348,7 +345,7 @@ export function Galaxy({
 
       // Ease filter visibility rather than snapping, so a filter change reads
       // as the galaxy thinning out instead of half of it vanishing.
-      const want = matches(n.category, n.subcategory) ? 1 : 0
+      const want = matches(n) ? 1 : 0
       shown[i] += (want - shown[i]) * Math.min(1, delta * 8)
     }
 
@@ -482,7 +479,7 @@ export function Galaxy({
   const pickable = (globalIndex: number | undefined) =>
     globalIndex !== undefined &&
     layout[globalIndex] !== undefined &&
-    matches(layout[globalIndex].category, layout[globalIndex].subcategory)
+    matches(layout[globalIndex])
 
   const handlersFor = (indices: number[]) => ({
     onPointerMove: (e: ThreeEvent<PointerEvent>) => {

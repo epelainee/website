@@ -81,7 +81,7 @@ content:
     filename: "{id}.json"
     format: json
     view:
-      fields: [title, org, subcategory, order]
+      fields: [title, org, subcategories, order]
       primary: title
       sort: [order, title]
       default:
@@ -100,10 +100,12 @@ content:
       - name: org
         label: Organization
         type: string
-      - name: subcategory
-        label: Subcategory
+      - name: subcategories
+        label: Subcategories
         type: reference
+        list: true
         required: true
+        description: One or more — the experience appears under each listed subcategory.
         options:
           collection: subcategories
           value: "{id}"
@@ -111,13 +113,15 @@ content:
       - name: dates
         label: Dates
         type: string
-        description: e.g. "2023" or "2021–2023". Empty → panel placeholder.
+        description: e.g. "2023" or "2021–2023". Leave blank to hide in the detail panel.
       - name: location
         label: Location
         type: string
+        description: Leave blank to hide in the detail panel.
       - name: blurb
         label: Description
         type: text
+        description: Leave blank to hide in the detail panel.
       - name: kind
         label: Kind
         type: select

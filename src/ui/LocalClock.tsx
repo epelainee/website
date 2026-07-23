@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import type { CSSProperties } from 'react'
+import { useContent } from '../content/useContent'
 import { useStore } from '../state/store'
+import { useViewport } from './useViewport'
 
 const chrome: CSSProperties = {
   position: 'fixed',
@@ -32,12 +34,16 @@ function formatDate(d: Date) {
 }
 
 /**
- * Galaxy chrome: local time top-left, local date top-right.
+ * Galaxy chrome: local time top-left, total entries top-center (wide), local
+ * date top-right — on compact viewports the date slot shows total entries instead.
  */
 export function LocalClock() {
   const phase = useStore((s) => s.phase)
   const visible = phase === 'galaxy'
+  const { experiences } = useContent()
+  const { compact } = useViewport()
   const [now, setNow] = useState(() => new Date())
+  const totalEntries = `${experiences.length} Total Entries`
 
   useEffect(() => {
     if (!visible) return
@@ -62,6 +68,19 @@ export function LocalClock() {
       >
         {formatTime(now)}
       </p>
+      {!compact ? (
+        <p
+          style={{
+            ...chrome,
+            left: '50%',
+            top: 'max(1.25rem, env(safe-area-inset-top))',
+            transform: 'translateX(-50%)',
+            textAlign: 'center',
+          }}
+        >
+          {totalEntries}
+        </p>
+      ) : null}
       <p
         style={{
           ...chrome,
@@ -69,11 +88,11 @@ export function LocalClock() {
           top: 'max(1.25rem, env(safe-area-inset-top))',
           left: 'max(7rem, env(safe-area-inset-left))',
           textAlign: 'right',
-          whiteSpace: 'normal',
+          whiteSpace: compact ? 'nowrap' : 'normal',
           lineHeight: 1.35,
         }}
       >
-        {formatDate(now)}
+        {compact ? totalEntries : formatDate(now)}
       </p>
     </>
   )

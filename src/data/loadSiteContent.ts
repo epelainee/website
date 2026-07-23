@@ -19,7 +19,9 @@ type ExpFile = {
   id: string
   title: string
   org?: string
-  subcategory: string
+  /** Legacy single subcategory — still accepted. */
+  subcategory?: string | string[]
+  subcategories?: string[]
   dates?: string
   location?: string
   blurb?: string
@@ -69,6 +71,12 @@ function asKind(v: string | undefined): ExperienceKind | undefined {
   return undefined
 }
 
+function normalizeSubcategories(e: ExpFile): string[] {
+  const raw = e.subcategories ?? e.subcategory
+  if (!raw) return []
+  return (Array.isArray(raw) ? raw : [raw]).filter(Boolean)
+}
+
 function loadSiteSettings(): SiteSettings {
   const first = Object.values(siteSettingsModule)[0]
   if (!first) {
@@ -114,16 +122,24 @@ export function loadSiteContent(): SiteContent {
   }))
 
   const experiences: Experience[] = Object.values(expModules)
-    .filter((e) => e?.id && e.title && e.subcategory)
+    .filter((e) => e?.id && e.title)
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
     .flatMap((e) => {
-      const category = categoryBySub.get(e.subcategory)
-      if (!category) {
-        console.warn(
-          `[content] experience "${e.id}" subcategory "${e.subcategory}" has no category; skipped`,
-        )
+      const subs = normalizeSubcategories(e)
+      if (subs.length === 0) {
+        console.warn(`[content] experience "${e.id}" has no subcategories; skipped`)
         return []
       }
+      const validSubs = subs.filter((sub) => categoryBySub.has(sub))
+      for (const sub of subs) {
+        if (!categoryBySub.has(sub)) {
+          console.warn(
+            `[content] experience "${e.id}" subcategory "${sub}" has no category; skipped`,
+          )
+        }
+      }
+      if (validSubs.length === 0) return []
+      const category = categoryBySub.get(validSubs[0])!
       const kind = asKind(e.kind)
       const links = (e.links ?? []).filter((l) => l.label && l.url)
       const exp: Experience = {
@@ -131,7 +147,7 @@ export function loadSiteContent(): SiteContent {
         title: e.title,
         org: e.org ?? '',
         category,
-        subcategory: e.subcategory,
+        subcategories: validSubs,
         dates: e.dates ?? '',
         location: e.location ?? '',
         blurb: e.blurb ?? '',

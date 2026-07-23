@@ -35,3 +35,14 @@ export function categoryOrder(categories: MainCategory[], id: CategoryId): numbe
   const i = categories.findIndex((c) => c.id === id)
   return i < 0 ? 0 : i
 }
+
+/** Map each subcategory id to its parent category id. */
+export function subcategoryToCategory(
+  categories: MainCategory[],
+): Map<string, CategoryId> {
+  const map = new Map<string, CategoryId>()
+  for (const c of categories) {
+    for (const s of c.subs) map.set(s.id, c.id)
+  }
+  return map
+}

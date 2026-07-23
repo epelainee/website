@@ -236,7 +236,7 @@ export function fieldPoint(
 export type NodeLayout = {
   id: string
   category: CategoryId
-  subcategory: string
+  subcategories: string[]
   /** Which ring of the field this node rides, 0..1. Set by its category. */
   arc: number
   /** Position on that ring, 0..2π. */
@@ -290,7 +290,7 @@ export function buildLayout(
       out.push({
         id,
         category,
-        subcategory: exp.subcategory,
+        subcategories: exp.subcategories,
         arc,
         angle: base + jitterAngle,
         phase: hash01(id, 3) * Math.PI * 2,

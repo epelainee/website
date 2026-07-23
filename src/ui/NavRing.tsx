@@ -5,7 +5,7 @@ import {
   useState,
   type CSSProperties,
 } from 'react'
-import { categoryById } from '../data/categories'
+import { categoryById, subcategoryToCategory } from '../data/categories'
 import type { CategoryId } from '../data/categories'
 import { useContent } from '../content/useContent'
 import { useStore } from '../state/store'
@@ -55,14 +55,22 @@ export function NavRing() {
   const enterSub = useStore((s) => s.enterSub)
 
   const { categoryCounts, subCounts } = useMemo(() => {
+    const bySub = subcategoryToCategory(categories)
     const categoryCounts = new Map<CategoryId, number>()
     const subCounts = new Map<string, number>()
     for (const e of experiences) {
-      categoryCounts.set(e.category, (categoryCounts.get(e.category) ?? 0) + 1)
-      subCounts.set(e.subcategory, (subCounts.get(e.subcategory) ?? 0) + 1)
+      const catsSeen = new Set<CategoryId>()
+      for (const sub of e.subcategories) {
+        subCounts.set(sub, (subCounts.get(sub) ?? 0) + 1)
+        const cat = bySub.get(sub)
+        if (cat) catsSeen.add(cat)
+      }
+      for (const cat of catsSeen) {
+        categoryCounts.set(cat, (categoryCounts.get(cat) ?? 0) + 1)
+      }
     }
     return { categoryCounts, subCounts }
-  }, [experiences])
+  }, [categories, experiences])
 
   const wantOpen = phase === 'galaxy' && ringOpen
   const [mounted, setMounted] = useState(wantOpen)

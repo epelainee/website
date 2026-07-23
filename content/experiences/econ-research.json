@@ -2,7 +2,10 @@
   "id": "econ-research",
   "title": "Economics Research Assistant",
   "org": "Trinity Western",
-  "subcategory": "biz-finance",
+  "subcategories": [
+    "sci-quant",
+    "biz-finance"
+  ],
   "dates": "October 2025 – June 2026",
   "location": "Vancouver, Canada",
   "blurb": "Applied Economics with Dr. Cynthia (Xin) Li. Scraped CSR/ESG data for 700+ firms via machine-learning-based RegPipeline metric, PowerBI, and Excel tools.",

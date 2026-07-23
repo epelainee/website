@@ -2,7 +2,10 @@
   "id": "investment-analyst-smif",
   "title": "Investment Analyst",
   "org": "TWU SMIF",
-  "subcategory": "biz-finance",
+  "subcategories": [
+    "biz-finance",
+    "sci-quant"
+  ],
   "dates": "August 2025 – April 2026",
   "location": "Vancouver, Canada",
   "blurb": "Equity investment management; fund valued at $341,000 CAD.",

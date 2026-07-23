@@ -1,10 +1,11 @@
 {
   "id": "ushering-ticketing",
-  "title": "Ushering, Ticketing & Customer Service",
-  "org": "various events",
-  "subcategory": "biz-service",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "title": "Event Services Associate",
+  "subcategories": [
+    "biz-sales",
+    "lead-events"
+  ],
+  "dates": "2023 – 2026",
+  "blurb": "Ushering, Ticketing & Customer Service. Various event styles (40+ events) across Indonesia & Canada. ",
   "order": 12
 }

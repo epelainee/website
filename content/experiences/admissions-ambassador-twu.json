@@ -2,9 +2,13 @@
   "id": "admissions-ambassador-twu",
   "title": "Admissions Ambassador",
   "org": "Trinity Western",
-  "subcategory": "biz-sales",
+  "subcategories": [
+    "lead-speaking",
+    "hum-education",
+    "lead-organizations"
+  ],
   "dates": "January 2026 – Present",
   "location": "Langley, Canada",
-  "blurb": "ㅤ",
+  "blurb": "Represented TWU through campus tours, recruitment events, and prospective-student programming.",
   "order": 5
 }

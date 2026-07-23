@@ -1,10 +1,11 @@
 {
   "id": "av-technician-grii-sph",
   "title": "Audio Visual Technician",
-  "org": "GRII & SPH",
-  "subcategory": "tech-media",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "tech-prod"
+  ],
+  "dates": "2022 – 2025",
+  "location": "Jakarta, Indonesia",
+  "blurb": "Handled audio, video, projection, livestream, and broadcasting systems for 50+ events in Jakarta; corporate, theatre, classical, and educational. Operated OBS, ATEM, and Allen & Heath digital mixers.",
   "order": 17
 }

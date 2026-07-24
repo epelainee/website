@@ -1,10 +1,12 @@
 {
   "id": "concert-hall-asj",
-  "title": "Concert Hall Personnel",
+  "title": "Concert Hall Associate",
   "org": "Aula Sinfonia Jakarta",
-  "subcategory": "tech-media",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "biz-sales",
+    "lead-events"
+  ],
+  "dates": "February 2025 – June 2025",
+  "blurb": "Front of house, backstage, and live production operations at Indonesia’s leading classical concert hall. Audiences of over 1,000 per event.",
   "order": 20
 }

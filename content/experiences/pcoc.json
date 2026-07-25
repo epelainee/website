@@ -1,11 +1,12 @@
 {
   "id": "pcoc",
   "title": "Motorized Boating License",
+  "org": "Transport Canada",
   "subcategories": [
     "other-certifications",
     "other-cool"
   ],
   "location": "Canada",
-  "blurb": "accredited by Transport Canada; Pleasure Craft Operator Card ",
+  "blurb": "Pleasure Craft Operator Card ",
   "order": 0
 }

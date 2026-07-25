@@ -1,6 +1,7 @@
 {
   "id": "tetris",
-  "title": "National Ranked Tetris Player",
+  "title": "Nationally Ranked Tetris Player",
+  "org": "TETR.IO",
   "subcategories": [
     "other-cool"
   ],

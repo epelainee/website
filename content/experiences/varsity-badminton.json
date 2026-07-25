@@ -1,10 +1,11 @@
 {
   "id": "varsity-badminton",
   "title": "Varsity Badminton",
-  "org": "",
-  "subcategory": "ath-badminton",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "org": "Sekolah Pelita Harapan",
+  "subcategories": [
+    "ath-badminton"
+  ],
+  "dates": "2023 – 2025",
+  "location": "Jakarta, Indonesia",
   "order": 59
 }

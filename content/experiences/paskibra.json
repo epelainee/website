@@ -1,10 +1,13 @@
 {
   "id": "paskibra",
-  "title": "Paskibra",
-  "org": "all positions",
-  "subcategory": "lead-civic",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "title": "PASKIBRA Troop Lead",
+  "subcategories": [
+    "other-misc",
+    "ath-badminton",
+    "lead-events"
+  ],
+  "dates": "2021 – 2024",
+  "location": "Indonesia",
+  "blurb": "Indonesian Flag Ceremonial Troop Leader @ SPH. Trained across various positions including Komandan Pasukan (Troop Commander), Pembawa/Pembentang Bendera (Flag Bearer), and Anggota Formasi (Ceremonial Formation) for institutional ceremonies. ",
   "order": 35
 }

@@ -2,9 +2,12 @@
   "id": "live-art-model-samc",
   "title": "Live Art Model",
   "org": "SAMC, TWU",
-  "subcategory": "crea-performance",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "crea-visual",
+    "lead-events"
+  ],
+  "dates": "January 2026",
+  "location": "Vancouver, Canada",
+  "blurb": "Modelled for timed live-drawing sessions used by visual-arts students; 200 rapid poses at a variety of time intervals.",
   "order": 51
 }

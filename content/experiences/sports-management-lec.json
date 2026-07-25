@@ -1,10 +1,14 @@
 {
   "id": "sports-management-lec",
-  "title": "Sports Management Staff",
+  "title": "Sports Management Associate",
   "org": "Langley Events Centre",
-  "subcategory": "ath-operations",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "ath-badminton",
+    "biz-sales",
+    "lead-events"
+  ],
+  "dates": "October 2025 – April 2026",
+  "location": "Langley, Canada",
+  "blurb": "Hosted USPORTS (national sport governing body for Canadian universities) events; Basketball, Volleyball, & Hockey. Managed scorekeeping, clock operation, statistics, and penalty-box management. Worked for USPORTS Volleyball Women's Nationals 2025.",
   "order": 62
 }

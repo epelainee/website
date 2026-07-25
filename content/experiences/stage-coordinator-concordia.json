@@ -2,9 +2,12 @@
   "id": "stage-coordinator-concordia",
   "title": "Stage Coordinator",
   "org": "Orkes Komunitas Concordia",
-  "subcategory": "tech-media",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "tech-prod",
+    "lead-events"
+  ],
+  "dates": "February 2025 – May 2025",
+  "location": "Jakarta, Indonesia",
+  "blurb": "Coordinated backstage and stage operations for classical orchestral performances; managed performer cues, stage entrances, equipment movement, and production timing @ Gedung Pusat Perfilman H. Usmar Ismail.",
   "order": 21
 }

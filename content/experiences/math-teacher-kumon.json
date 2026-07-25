@@ -1,10 +1,14 @@
 {
   "id": "math-teacher-kumon",
-  "title": "Math Teacher",
+  "title": "Math & English Instructor",
   "org": "Kumon",
-  "subcategory": "hum-education",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "hum-education",
+    "hum-literature",
+    "sci-quant"
+  ],
+  "dates": "March 2026 – June 2026",
+  "location": "Langley, Canada",
+  "blurb": "Taught Mathematics & English to 100+ students daily.",
   "order": 56
 }

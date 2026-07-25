@@ -1,10 +1,12 @@
 {
   "id": "law-policy-ottawa",
-  "title": "Law & Policy",
+  "title": "Law & Policy Program",
   "org": "LLC Ottawa",
-  "subcategory": "hum-debate",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "sci-social"
+  ],
+  "dates": "April 2026 – May 2026",
+  "location": "Ottawa, Canada",
+  "blurb": "Studied Canadian law, public policy, & political institutions at the Laurentian Leadership Centre in Ottawa. ",
   "order": 55
 }

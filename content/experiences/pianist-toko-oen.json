@@ -2,9 +2,11 @@
   "id": "pianist-toko-oen",
   "title": "Restaurant Pianist",
   "org": "Toko Oen",
-  "subcategory": "crea-music",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "crea-music"
+  ],
+  "dates": "December 2023 – January 2024",
+  "location": "Surabaya, Indonesia",
+  "blurb": "Performed live piano for restaurant guests and maintained a rotating repertoire (30+ pieces) suited to a hospitality environment.",
   "order": 37
 }

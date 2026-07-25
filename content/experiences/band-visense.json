@@ -1,10 +1,20 @@
 {
   "id": "band-visense",
-  "title": "Founder",
+  "title": "Band Founder",
   "org": "VISENSE",
-  "subcategory": "crea-music",
-  "dates": "",
-  "location": "",
-  "blurb": "",
-  "order": 40
+  "subcategories": [
+    "crea-music",
+    "lead-organizations",
+    "lead-events"
+  ],
+  "dates": "October 2024 – August 2025",
+  "location": "Jakarta, Indonesia",
+  "blurb": "Electric Guitarist + Bassist; Founder of VISENSE. Performed at a variety of venues including Lippo Mall Puri, TEDx events, BERMVDA Cafe, etc. Managed all band logistics and musical direction.",
+  "order": 40,
+  "links": [
+    {
+      "label": "VISENSE",
+      "url": "https://drive.google.com/file/d/1MYolBeamcD3wmkj-eEwgeK64e8dgQVXf/view"
+    }
+  ]
 }

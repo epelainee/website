@@ -2,9 +2,11 @@
   "id": "badminton-referee-pbsi",
   "title": "Line Judge & Referee",
   "org": "PBSI Tangerang",
-  "subcategory": "ath-badminton",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "ath-badminton"
+  ],
+  "dates": "June 2025",
+  "location": "Tangerang, Indonesia",
+  "blurb": "Officiated a PBSI (official Badminton Association of Indonesia) sanctioned badminton competition as referee and line judge, enforcing national regulations, issuing real-time rulings, and maintaining court control throughout competitive matches. ",
   "order": 61
 }

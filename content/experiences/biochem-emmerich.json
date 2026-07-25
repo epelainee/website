@@ -2,10 +2,12 @@
   "id": "biochem-emmerich",
   "title": "Biochemistry Research Intern",
   "org": "Emmerich Research Center",
-  "subcategory": "sci-life",
-  "dates": "",
-  "location": "",
-  "blurb": "",
-  "order": 25,
-  "kind": "internship"
+  "subcategories": [
+    "sci-life"
+  ],
+  "dates": "May 2024",
+  "location": "Jakarta, Indonesia",
+  "blurb": "In-depth literature review on the potential applications of chitosan-based probiotics in healthcare and biotechnology.",
+  "kind": "internship",
+  "order": 25
 }

@@ -2,9 +2,11 @@
   "id": "florist-de-fleur",
   "title": "Florist",
   "org": "De Fleur",
-  "subcategory": "crea-visual",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "crea-visual"
+  ],
+  "dates": "January 2024",
+  "location": "Malang, Indonesia",
+  "blurb": "Prepared floral arrangements, processed customer requests, organized materials, and supported daily floral-shop operations.",
   "order": 49
 }

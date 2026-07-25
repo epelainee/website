@@ -1,10 +1,12 @@
 {
   "id": "radio-performance",
   "title": "Radio Performance",
-  "org": "various bands",
-  "subcategory": "crea-music",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "org": "Vancouver Co-Op Radio",
+  "subcategories": [
+    "crea-music"
+  ],
+  "dates": "October 2025",
+  "location": "Vancouver, Canada",
+  "blurb": "Performed music live on air with JFP on CFRO 100.5 FM (Unsigned BC, Vancouver Co-Op Radio).",
   "order": 44
 }

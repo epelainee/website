@@ -1,9 +1,12 @@
 {
   "id": "foodsafe1",
   "title": "FOODSAFE Level 1 Certification",
+  "org": "BC FOODSAFE Secretariat",
   "subcategories": [
     "crea-culinary",
     "other-certifications"
   ],
+  "dates": "July 2026",
+  "location": "Vancouver, Canada",
   "order": 0
 }

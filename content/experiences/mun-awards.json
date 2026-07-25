@@ -1,10 +1,11 @@
 {
   "id": "mun-awards",
   "title": "MUN Awards",
-  "org": "Korea & Singapore",
-  "subcategory": "hum-debate",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "lead-speaking",
+    "lead-awards",
+    "sci-social"
+  ],
+  "blurb": "Won awards at Harvard Model United Nations 2024 (Seoul, Korea), Yale Model United Nations 2024 (Singapore).",
   "order": 54
 }

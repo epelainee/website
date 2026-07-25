@@ -1,6 +1,7 @@
 {
   "id": "band-visense",
   "title": "VISENSE",
+  "org": "Band Founder",
   "subcategories": [
     "crea-music",
     "lead-organizations",
@@ -12,7 +13,7 @@
   "order": 40,
   "links": [
     {
-      "label": "VISENSE",
+      "label": "Band Profile",
       "url": "https://drive.google.com/file/d/1MYolBeamcD3wmkj-eEwgeK64e8dgQVXf/view"
     }
   ]

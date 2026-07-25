@@ -1,10 +1,10 @@
 {
   "id": "sports-announcer-lpco",
   "title": "Sports Announcer",
-  "org": "LPCO",
-  "subcategory": "ath-operations",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "org": "Lakah Permai Charity Open",
+  "subcategories": [
+    "ath-badminton",
+    "lead-events"
+  ],
   "order": 63
 }

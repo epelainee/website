@@ -1,10 +1,9 @@
 {
   "id": "gfx-designer",
-  "title": "Commissioned GFX Designer",
-  "org": "freelance",
-  "subcategory": "crea-visual",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "title": "GFX Designer",
+  "subcategories": [
+    "crea-visual"
+  ],
+  "dates": "2020 – 2022",
   "order": 45
 }

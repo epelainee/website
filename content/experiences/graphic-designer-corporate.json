@@ -1,10 +1,9 @@
 {
   "id": "graphic-designer-corporate",
   "title": "Graphic Designer",
-  "org": "corporate events",
-  "subcategory": "crea-visual",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "crea-visual"
+  ],
+  "blurb": "Produced commissioned graphics and promotional materials for individual clients and organizations. Managed projects from initial brief through revisions and final delivery. Worked for SPH, È Dolce, TheExtraStep, Overbooked, etc.",
   "order": 46
 }

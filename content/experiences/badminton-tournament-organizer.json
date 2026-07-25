@@ -1,10 +1,14 @@
 {
   "id": "badminton-tournament-organizer",
-  "title": "Tournament Organizer",
-  "org": "badminton",
-  "subcategory": "lead-events",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "title": "Badminton Tournament Co-Organizer",
+  "org": "Lakah Permai Charity Open",
+  "subcategories": [
+    "lead-events",
+    "ath-badminton",
+    "lead-organizations"
+  ],
+  "dates": "November 2024 – April 2025",
+  "location": "Tangerang, Indonesia",
+  "blurb": "Hosted a high-level badminton tournament from planning to execution. ",
   "order": 32
 }

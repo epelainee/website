@@ -1,10 +1,12 @@
 {
   "id": "conducting-apprentice",
   "title": "Conducting Apprentice",
-  "org": "",
-  "subcategory": "crea-music",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "org": "Sekolah Pelita Harapan",
+  "subcategories": [
+    "crea-music"
+  ],
+  "dates": "January 2025 – June 2025",
+  "location": "Tangerang, Indonesia",
+  "blurb": "Studied conducting under John Paul, covering score preparation, rehearsal direction, ensemble communication, conducting technique, and musical interpretation.",
   "order": 42
 }

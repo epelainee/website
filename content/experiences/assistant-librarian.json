@@ -1,10 +1,12 @@
 {
   "id": "assistant-librarian",
   "title": "Assistant Librarian",
-  "org": "",
-  "subcategory": "hum-media",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "org": "Sekolah Pelita Harapan",
+  "subcategories": [
+    "hum-literature",
+    "hum-education"
+  ],
+  "dates": "2023",
+  "location": "Jakarta, Indonesia",
   "order": 58
 }

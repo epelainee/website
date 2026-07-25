@@ -1,10 +1,18 @@
 {
   "id": "radio-host-coop",
   "title": "Radio Host",
-  "org": "Vancouver Coop Radio",
-  "subcategory": "hum-media",
-  "dates": "",
-  "location": "",
-  "blurb": "",
-  "order": 57
+  "org": "Vancouver Co-op Radio",
+  "subcategories": [
+    "lead-speaking"
+  ],
+  "dates": "December 2025 – March 2026",
+  "location": "Vancouver, Canada",
+  "blurb": "Co-hosted radio program Unsigned BC, focused on independent British Columbia musicians. Broadcasted live to CFRO 100.5 FM via Vancouver Co-Op Radio. ",
+  "order": 57,
+  "links": [
+    {
+      "label": "Unsigned BC",
+      "url": "https://www.unsignedbc.com/about-us"
+    }
+  ]
 }

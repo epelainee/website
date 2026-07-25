@@ -2,9 +2,14 @@
   "id": "cofounder-theextrastep",
   "title": "Co-Founder",
   "org": "TheExtraStep",
-  "subcategory": "lead-founding",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "lead-organizations",
+    "hum-education",
+    "tech-computing"
+  ],
+  "dates": "2022 – 2025",
+  "location": "Indonesia",
+  "blurb": "Established a student-led organization to provide digital literacy education in 7+ Indonesian cities. Raised $12,000 USD to donate computers, printers, and other technological aid to 30+ local communities.",
+  "kind": "certification",
   "order": 29
 }

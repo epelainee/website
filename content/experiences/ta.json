@@ -1,11 +1,13 @@
 {
   "id": "ta",
-  "title": "Teaching Assistant (Uni)",
+  "title": "TA ECON 275; RELS 110",
   "org": "Trinity Western University",
   "subcategories": [
     "hum-education",
     "sci-quant",
     "sci-social"
   ],
+  "dates": "August 2026 – Present",
+  "location": "Langley, Canada",
   "order": 0
 }

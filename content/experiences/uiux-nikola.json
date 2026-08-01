@@ -2,10 +2,13 @@
   "id": "uiux-nikola",
   "title": "UI/UX Intern",
   "org": "Nikola Academy",
-  "subcategory": "tech-software",
-  "dates": "",
-  "location": "",
-  "blurb": "",
-  "order": 13,
-  "kind": "internship"
+  "subcategories": [
+    "tech-computing",
+    "crea-visual"
+  ],
+  "dates": "June 2025",
+  "location": "Jakarta, Indonesia  /   Hybrid",
+  "blurb": "Developed 10+ user flow diagrams, 15+ wireframes, website design and 20+ mockups for ERP modules. Collaborated closely with backend developers to align design specs with HTML/CSS frameworks.",
+  "kind": "internship",
+  "order": 13
 }

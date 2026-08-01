@@ -2,10 +2,12 @@
   "id": "medical-intern-siloam",
   "title": "Medical Intern",
   "org": "Siloam Hospitals",
-  "subcategory": "sci-medicine",
-  "dates": "",
-  "location": "",
-  "blurb": "",
-  "order": 22,
-  "kind": "internship"
+  "subcategories": [
+    "sci-life"
+  ],
+  "dates": "July 2024",
+  "location": "Tangerang, Indonesia",
+  "blurb": "Neuroscience, pharmacy, and radiology. Shadowed MVD surgery and cleft lip procedures, as well as intensive training on diagnostic and clinical workflows.",
+  "kind": "internship",
+  "order": 22
 }

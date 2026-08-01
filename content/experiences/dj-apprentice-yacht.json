@@ -1,10 +1,13 @@
 {
   "id": "dj-apprentice-yacht",
   "title": "DJ Apprentice",
-  "org": "yacht service",
-  "subcategory": "crea-music",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "org": "Paradise On The Boat",
+  "subcategories": [
+    "crea-music",
+    "tech-prod"
+  ],
+  "dates": "April 2024",
+  "location": "Ponco Island, Indonesia",
+  "blurb": "Trained under DJ Marshl in live mixing, track selection, transitions, cueing, equipment operation for yacht events.",
   "order": 43
 }

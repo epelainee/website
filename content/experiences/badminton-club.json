@@ -1,10 +1,12 @@
 {
   "id": "badminton-club",
-  "title": "Badminton Club",
-  "org": "",
-  "subcategory": "ath-badminton",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "title": "Badminton Club Co-Founder",
+  "org": "Sekolah Pelita Harapan",
+  "subcategories": [
+    "ath-badminton",
+    "lead-organizations"
+  ],
+  "dates": "2023 – 2024",
+  "location": "Jakarta, Indonesia",
   "order": 60
 }

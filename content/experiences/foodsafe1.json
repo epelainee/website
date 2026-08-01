@@ -1,0 +1,18 @@
+{
+  "id": "foodsafe1",
+  "title": "Food-Handling Certification",
+  "org": "BC FOODSAFE Secretariat",
+  "subcategories": [
+    "other-certifications",
+    "crea-culinary"
+  ],
+  "dates": "Issued July 2026",
+  "location": "Vancouver, Canada",
+  "order": 0,
+  "links": [
+    {
+      "label": "FOODSAFE Level 1",
+      "url": "https://drive.google.com/file/d/1N8ETnkZR4NBZd-hU5C5X2MTAujwhyDnR/view?usp=sharing"
+    }
+  ]
+}

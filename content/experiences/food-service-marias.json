@@ -2,6 +2,11 @@
   "id": "food-service-marias",
   "title": "Food Service Associate",
   "org": "Maria's Gelato",
-  "subcategory": "crea-culinary",
+  "subcategories": [
+    "crea-culinary"
+  ],
+  "dates": "October 2025 – March 2026",
+  "location": "Langley, Canada",
+  "blurb": "Cafe & Gelato",
   "order": 9
 }

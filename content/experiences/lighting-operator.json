@@ -1,10 +1,10 @@
 {
   "id": "lighting-operator",
   "title": "Lighting Operator",
-  "org": "",
-  "subcategory": "tech-media",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "tech-prod"
+  ],
+  "dates": "May 2025",
+  "blurb": "Ran stage and event lighting during live theater productions; 500+ attendee events.",
   "order": 19
 }

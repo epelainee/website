@@ -2,9 +2,11 @@
   "id": "choral-jakarta-oratorio",
   "title": "National Choral Member",
   "org": "Jakarta Oratorio Society",
-  "subcategory": "crea-music",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "crea-music"
+  ],
+  "dates": "2013 – 2025",
+  "location": "Jakarta, Indonesia",
+  "blurb": "National choral ensemble in large-scale concerts, performing at venues such as Aula Sinfonia Jakarta (Indonesia's leading classical concert hall, audience up to 1,400) & Monas (Indonesia's national monument) @ Konser Akbar 2023 with 80,000 attendees.",
   "order": 38
 }

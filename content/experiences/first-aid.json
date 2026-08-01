@@ -1,11 +1,12 @@
 {
   "id": "first-aid",
-  "title": "First Aid Certified",
-  "org": "",
-  "subcategory": "sci-medicine",
-  "dates": "",
-  "location": "",
-  "blurb": "",
-  "order": 24,
-  "kind": "certification"
+  "title": "First Aid, CPR & AED Certification",
+  "org": "Canadian Red Cross",
+  "subcategories": [
+    "other-certifications",
+    "sci-life"
+  ],
+  "dates": "Issued September 2025",
+  "location": "Vancouver, Canada",
+  "order": 24
 }

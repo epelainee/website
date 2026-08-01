@@ -1,7 +1,11 @@
 {
   "id": "barista-roemah",
   "title": "Assistant Barista",
-  "org": "Roemah",
-  "subcategory": "crea-culinary",
+  "org": "Roemah Rempah",
+  "subcategories": [
+    "crea-culinary"
+  ],
+  "dates": "June 2024 – July 2024",
+  "location": "Jakarta, Indonesia",
   "order": 8
 }

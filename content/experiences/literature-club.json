@@ -1,10 +1,13 @@
 {
   "id": "literature-club",
-  "title": "Literature Club",
-  "org": "club leadership",
-  "subcategory": "lead-clubs",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "title": "Literature Association Co-President",
+  "org": "Overbooked",
+  "subcategories": [
+    "hum-literature",
+    "lead-organizations"
+  ],
+  "dates": "2023 – 2024",
+  "location": "Jakarta, Indonesia",
+  "blurb": "Led literary discussions and activities covering books, writing, interpretation, and creative work. @ SPH",
   "order": 34
 }

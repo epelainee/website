@@ -1,10 +1,12 @@
 {
   "id": "concert-band",
   "title": "Concert Band",
-  "org": "",
-  "subcategory": "crea-music",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "org": "Sekolah Pelita Harapan",
+  "subcategories": [
+    "crea-music"
+  ],
+  "dates": "2022 – 2024",
+  "location": "Jakarta, Indonesia",
+  "blurb": "Flautist, Pianist, & Conductor. Selected as a Flautist for an International Music Conference in Hong Kong (ACSC 2024).",
   "order": 41
 }

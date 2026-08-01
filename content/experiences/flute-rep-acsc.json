@@ -1,10 +1,14 @@
 {
   "id": "flute-rep-acsc",
   "title": "Indonesian Flute Representative",
-  "org": "Asia Christian Schools Conference, Hong Kong",
-  "subcategory": "crea-music",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "org": "Asia Christian Schools Conference",
+  "subcategories": [
+    "crea-music",
+    "lead-awards"
+  ],
+  "dates": "March 2024",
+  "location": "Hong Kong",
+  "blurb": "Represented Indonesia (1 of 3 selected) as a flute performer at an international music conference involving institutions across Asia.",
+  "kind": "certification",
   "order": 39
 }

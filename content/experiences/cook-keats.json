@@ -2,6 +2,10 @@
   "id": "cook-keats",
   "title": "Cook",
   "org": "Keat's Camps",
-  "subcategory": "crea-culinary",
+  "subcategories": [
+    "crea-culinary"
+  ],
+  "dates": "June 2026 – August 2026",
+  "location": "Gibsons, Canada",
   "order": 10
 }

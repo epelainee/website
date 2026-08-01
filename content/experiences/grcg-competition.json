@@ -2,9 +2,13 @@
   "id": "grcg-competition",
   "title": "1st Place",
   "org": "GRC Case Competition",
-  "subcategory": "biz-commercial",
+  "subcategories": [
+    "biz-commercial",
+    "lead-awards",
+    "sci-social"
+  ],
   "dates": "2024",
   "location": "Jakarta, Indonesia",
-  "blurb": "Won first place at the Global Research & Consulting Group Case Competition.",
+  "blurb": "Evaluating the Oil and Gas Industry; Supply Chain focus. Won first place at the Global Research & Consulting Group Case Competition.",
   "order": 6
 }

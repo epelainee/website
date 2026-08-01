@@ -1,10 +1,17 @@
 {
   "id": "tedx-organizer",
-  "title": "Organizer",
+  "title": "Executive Director",
   "org": "TEDx",
-  "subcategory": "lead-events",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "lead-organizations",
+    "biz-sales",
+    "lead-events",
+    "lead-speaking",
+    "tech-prod"
+  ],
+  "dates": "2024 – 2025",
+  "location": "Jakarta, Indonesia",
+  "blurb": "Co-organized a TEDx event. Handled executive direction, marketing, technical production, and logistics @ TEDxYouth@SPHLV.",
+  "kind": "certification",
   "order": 30
 }

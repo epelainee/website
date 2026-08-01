@@ -2,9 +2,11 @@
   "id": "forklift-cirro",
   "title": "Forklift Driver",
   "org": "CIRRO",
-  "subcategory": "biz-service",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "other-misc",
+    "other-cool"
+  ],
+  "dates": "December 2025 – January 2026",
+  "location": "New Jersey, United States",
   "order": 11
 }

@@ -2,9 +2,11 @@
   "id": "nail-art-longlashting",
   "title": "Nail Art Apprentice",
   "org": "Longlashting Academy",
-  "subcategory": "crea-visual",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "crea-visual"
+  ],
+  "dates": "August 2025",
+  "location": "Jakarta, Indonesia",
+  "blurb": "Trained in nail preparation, polish application, gel techniques, detailing, sanitation, and client-ready nail art. Received certificates in Manicure, Extensions, & Nail Art.",
   "order": 48
 }

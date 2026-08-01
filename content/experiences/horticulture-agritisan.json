@@ -1,11 +1,13 @@
 {
   "id": "horticulture-agritisan",
   "title": "Horticulture Intern",
-  "org": "Agritisan, Singapore",
-  "subcategory": "sci-life",
-  "dates": "",
-  "location": "",
-  "blurb": "",
-  "order": 26,
-  "kind": "internship"
+  "org": "Agritisan",
+  "subcategories": [
+    "sci-life"
+  ],
+  "dates": "June 2024",
+  "location": "Singapore",
+  "blurb": "Urban Horticulture. Worked across plant cultivation, maintenance, harvesting, and general farm operations. Managed the care and production of 30+ plant varieties.",
+  "kind": "internship",
+  "order": 26
 }

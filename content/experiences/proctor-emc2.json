@@ -1,10 +1,13 @@
 {
   "id": "proctor-emc2",
-  "title": "Proctor",
+  "title": "Mathematics Proctor",
   "org": "E=MC² Mathletes Competition",
-  "subcategory": "sci-math",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "sci-quant",
+    "hum-education",
+    "lead-events"
+  ],
+  "dates": "March 2025",
+  "location": "Tangerang, Indonesia",
   "order": 28
 }

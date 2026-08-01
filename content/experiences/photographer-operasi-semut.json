@@ -2,9 +2,12 @@
   "id": "photographer-operasi-semut",
   "title": "Photographer",
   "org": "Operasi Semut",
-  "subcategory": "crea-visual",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "crea-visual",
+    "tech-prod"
+  ],
+  "dates": "February 2025",
+  "location": "Jakarta, Indonesia",
+  "blurb": "Documented corporate activities and events, producing visual material for organizational communications and public outreach. ",
   "order": 47
 }

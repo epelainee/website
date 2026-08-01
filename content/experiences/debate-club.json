@@ -1,10 +1,14 @@
 {
   "id": "debate-club",
-  "title": "Debate Club",
-  "org": "",
-  "subcategory": "hum-debate",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "title": "Debate Competitions",
+  "org": "Eagles Debate Club",
+  "subcategories": [
+    "lead-speaking",
+    "hum-literature",
+    "lead-awards"
+  ],
+  "dates": "2023 – 2024",
+  "location": "Jakarta, Indonesia",
+  "blurb": "6th Place Asian Parliamentary Debate Charios 2023",
   "order": 53
 }

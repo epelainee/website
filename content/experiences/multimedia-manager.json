@@ -1,10 +1,13 @@
 {
   "id": "multimedia-manager",
   "title": "Multimedia Manager",
-  "org": "",
-  "subcategory": "tech-media",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "tech-prod",
+    "crea-visual",
+    "lead-events"
+  ],
+  "dates": "2025",
+  "location": "Jakarta, Indonesia",
+  "blurb": "Managed multimedia assets, presentation materials, playback systems, and visual cues for live events and performances (50+ events across Jakarta)",
   "order": 16
 }

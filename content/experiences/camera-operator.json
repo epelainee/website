@@ -1,10 +1,10 @@
 {
   "id": "camera-operator",
   "title": "Camera Operator",
-  "org": "theater, sports, corporate",
-  "subcategory": "tech-media",
-  "dates": "",
-  "location": "",
-  "blurb": "",
+  "subcategories": [
+    "tech-prod"
+  ],
+  "dates": "2025",
+  "blurb": "Live Production & Broadcasting. Operated cameras for 30+ events (theatre, sports, and corporate). Includes streaming for international sport tournaments and events with 500+ attendees. ",
   "order": 18
 }

@@ -39,7 +39,8 @@ function formatDate(d: Date) {
 /**
  * Galaxy chrome:
  * - Left: local time
- * - Center: entry count (hidden while search is open; long-press opens search on touch)
+ * - Center (desktop) / top-right (mobile): entry count — hidden while search
+ *   is open; long-press opens search on touch
  * - Right (desktop): date
  */
 export function LocalClock() {
@@ -109,17 +110,25 @@ export function LocalClock() {
           onContextMenu={(e) => e.preventDefault()}
           style={{
             ...chrome,
-            left: '50%',
             top: 'max(1.25rem, env(safe-area-inset-top))',
-            transform: 'translateX(-50%)',
             maxWidth: 'min(18rem, 42vw)',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            textAlign: 'center',
             pointerEvents: 'auto',
             cursor: 'default',
             WebkitUserSelect: 'none',
             userSelect: 'none',
+            ...(compact
+              ? {
+                  right: 'max(1.25rem, env(safe-area-inset-right))',
+                  left: 'auto',
+                  textAlign: 'right' as const,
+                }
+              : {
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  textAlign: 'center' as const,
+                }),
           }}
         >
           {totalEntries}

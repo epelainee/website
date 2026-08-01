@@ -1,5 +1,5 @@
 import type { CategoryId, MainCategory } from './categories'
-import { subcategoryToCategory } from './categories'
+import { subcategoryToCategory, subLabel } from './categories'
 
 export type ExperienceKind = 'internship' | 'certification'
 
@@ -44,4 +44,25 @@ export function subcategoriesMatchPath(
     return subcategories.some((sub) => bySub.get(sub) === cat)
   }
   return subcategories.includes(path[1])
+}
+
+/** Case-insensitive match against title / org / location / blurb / dates / tags. */
+export function experienceMatchesSearch(
+  exp: Experience,
+  query: string,
+  categories: MainCategory[],
+): boolean {
+  const q = query.trim().toLowerCase()
+  if (!q) return true
+  const hay = [
+    exp.title,
+    exp.org,
+    exp.location,
+    exp.blurb,
+    exp.dates,
+    ...exp.subcategories.map((id) => subLabel(categories, id)),
+  ]
+    .join(' ')
+    .toLowerCase()
+  return hay.includes(q)
 }

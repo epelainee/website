@@ -1,7 +1,10 @@
 import { createRoot } from 'react-dom/client'
+import { inject } from '@vercel/analytics'
 import './index.css'
 import App from './App.tsx'
 import { ContentProvider } from './content/ContentProvider'
+
+inject()
 
 createRoot(document.getElementById('root')!).render(
   <ContentProvider>

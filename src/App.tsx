@@ -12,6 +12,7 @@ import { spawnEmptyRipple } from './ui/emptyRippleBus'
 import { NamePlate } from './ui/NamePlate'
 import { SocialLinks } from './ui/SocialLinks'
 import { LocalClock } from './ui/LocalClock'
+import { GalaxySearch } from './ui/GalaxySearch'
 import { dustCountFor, shellCountFor, useViewport } from './ui/useViewport'
 import { useBackKey } from './ui/useBackKey'
 import { CRUSH_DURATION, useStore } from './state/store'
@@ -58,6 +59,7 @@ export default function App() {
       <NamePlate />
       <SocialLinks />
       <LocalClock />
+      <GalaxySearch />
 
       {/* Intro cue + copyright. Dematerialises with the burst. */}
       <div

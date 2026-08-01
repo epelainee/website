@@ -159,7 +159,7 @@ export function starPoint(
  * Outer orbit vs half-height of the frustum. Below 1 leaves air for bottom
  * chrome (name / mailto) plus a small margin so nodes don't kiss the text.
  */
-export const FIELD_FILL_Y = 0.78
+export const FIELD_FILL_Y = 0.72
 
 /** Outer orbit vs half-width — slight inset so sides don't clip hard. */
 export const FIELD_FILL_X = 0.92

@@ -22,11 +22,17 @@ type State = {
   selectedId: string | null
   path: string[]
   ringOpen: boolean
+  /** Galaxy field search — empty string = no text filter. */
+  searchQuery: string
+  /** Whether the search field is expanded (query can still filter when closed). */
+  searchOpen: boolean
 
   crush: () => void
   setHovered: (id: string | null) => void
   select: (id: string | null) => void
   toggleRing: () => void
+  setSearchQuery: (q: string) => void
+  setSearchOpen: (open: boolean) => void
 
   enterCategory: (id: CategoryId) => void
   enterSub: (id: string) => void
@@ -46,6 +52,8 @@ export const useStore = create<State>((set, get) => ({
   path: [],
   // Closed on arrival — the categories only appear once the star is clicked.
   ringOpen: false,
+  searchQuery: '',
+  searchOpen: false,
 
   /**
    * Intro -> crushing -> galaxy. Re-entry is guarded rather than queued; the
@@ -65,6 +73,8 @@ export const useStore = create<State>((set, get) => ({
     set({ selectedId: id })
   },
   toggleRing: () => set((s) => ({ ringOpen: !s.ringOpen })),
+  setSearchQuery: (q) => set({ searchQuery: q }),
+  setSearchOpen: (open) => set({ searchOpen: open }),
 
   enterCategory: (id) => set({ path: [id], ...afterChoice }),
 
@@ -81,14 +91,15 @@ export const useStore = create<State>((set, get) => ({
 
   /**
    * The keyboard "back": one press undoes the last spatial step, layered —
-   * an open panel closes first, then the path pops a level, and at root the
-   * galaxy re-collapses into the intro star. Reversal is free: Galaxy's frame
-   * loop eases `crush.progress` toward 0 whenever `phase` is 'intro', and the
-   * camera, core and field all interpolate off that one number.
+   * an open panel closes first, then search clears, then the search UI closes,
+   * then the path pops a level, and at root the galaxy re-collapses into the
+   * intro star.
    */
   back: () =>
     set((s) => {
       if (s.selectedId !== null) return { selectedId: null, hoveredId: null }
+      if (s.searchQuery.trim()) return { searchQuery: '', hoveredId: null }
+      if (s.searchOpen) return { searchOpen: false, hoveredId: null }
       if (s.path.length > 0)
         return { path: s.path.slice(0, -1), hoveredId: null, ...afterChoice }
       // Leaving the galaxy entirely, so the ring goes too. Mid-crush presses
@@ -101,6 +112,8 @@ export const useStore = create<State>((set, get) => ({
           ringOpen: false,
           hoveredId: null,
           selectedId: null,
+          searchQuery: '',
+          searchOpen: false,
         }
       return s
     }),

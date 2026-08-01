@@ -143,7 +143,7 @@ export function NamePlate() {
                 left: 'max(1.25rem, env(safe-area-inset-left))',
                 right: 'max(5.5rem, env(safe-area-inset-right))',
                 bottom:
-                  'max(1.25rem, calc(env(safe-area-inset-bottom) + 0.25rem))',
+                  'max(1rem, env(safe-area-inset-bottom))',
                 transform: settledVisible
                   ? 'translateY(0)'
                   : 'translateY(8px)',
@@ -153,7 +153,7 @@ export function NamePlate() {
             : {
                 left: '50%',
                 bottom:
-                  'max(1.75rem, calc(env(safe-area-inset-bottom) + 1.25rem))',
+                  'max(1.25rem, calc(env(safe-area-inset-bottom) + 0.75rem))',
                 transform: settledVisible
                   ? 'translateX(-50%) translateY(0)'
                   : 'translateX(-50%) translateY(8px)',
@@ -185,6 +185,17 @@ export function NamePlate() {
           }}
         >
           {displayName}
+        </p>
+        <p
+          style={{
+            margin: compact ? '0.35rem 0 0' : '0.4rem 0 0',
+            font: '400 0.5625rem/1 var(--mono)',
+            letterSpacing: '0.06em',
+            color: 'rgba(255, 255, 255, 0.55)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          ©️ 2026 Elizabeth Patricia Elaine
         </p>
       </div>
     </>

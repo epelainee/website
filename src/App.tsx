@@ -108,18 +108,21 @@ export default function App() {
         >
           {coarse ? 'Tap' : 'Click'} the star to explore!
         </p>
-        <p
-          style={{
-            margin: 0,
-            font: '400 0.5625rem/1 var(--mono)',
-            letterSpacing: '0.06em',
-            color: 'rgba(255, 255, 255, 0.55)',
-            textShadow: '0 0 8px #000',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          ©️ 2026 Elizabeth Patricia Elaine
-        </p>
+        {/* Mobile: copyright lives under the name plate only. */}
+        {!compact && (
+          <p
+            style={{
+              margin: 0,
+              font: '400 0.5625rem/1 var(--mono)',
+              letterSpacing: '0.06em',
+              color: 'rgba(255, 255, 255, 0.55)',
+              textShadow: '0 0 8px #000',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            ©️ 2026 Elizabeth Patricia Elaine
+          </p>
+        )}
       </div>
 
       {/* Desktop keyboard hint. */}

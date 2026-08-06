@@ -8,5 +8,11 @@
   ],
   "dates": "August 2026",
   "blurb": "Educator Communication & Idea Workshop; completed global professional learning program",
-  "order": 0
+  "order": 0,
+  "links": [
+    {
+      "label": "Certificate",
+      "url": "https://drive.google.com/file/d/1IHjIM8Y-EV-aRzwqHT3-L9Wq8GeGjg1n/view?usp=sharing"
+    }
+  ]
 }

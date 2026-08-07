@@ -1,0 +1,11 @@
+{
+  "id": "discordbot",
+  "title": "Software Developer",
+  "subcategories": [
+    "tech-engineering",
+    "tech-computing"
+  ],
+  "dates": "2020 – 2022",
+  "blurb": "Engineered end-to-end Discord automation platforms for clients (JavaScript; discord.js, Node.js). Designed modular command frameworks, asynchronous event handlers, third-party API integrations, & data systems. Deployments served 300K+ users.",
+  "order": 0
+}

@@ -5,7 +5,13 @@
   "subcategories": [
     "other-cool"
   ],
-  "blurb": "Prev. ranked #327 (S-) in Indonesia on TETR.IO in 2024. ",
+  "blurb": "Prev. ranked #327 (S-) in Indonesia on TETR.IO in 2024. Globally ranked 15k out of 9 million playerbase.",
   "kind": "certification",
-  "order": 0
+  "order": 0,
+  "links": [
+    {
+      "label": "TETR.IO",
+      "url": "https://drive.google.com/file/d/1gXbO6yXXIsSwrh7tAF1XZru2DwIp9InZ/view?usp=sharing"
+    }
+  ]
 }

@@ -1,11 +1,12 @@
 {
   "id": "fitness-centre",
-  "title": "Fitness Centre Operations",
+  "title": "Fitness Centre Management",
   "org": "Trinity Western University",
   "subcategories": [
     "biz-sales"
   ],
   "dates": "August 2026 – Present",
   "location": "Langley, Canada",
+  "blurb": "Gym operations & building management",
   "order": 0
 }

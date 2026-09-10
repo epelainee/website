@@ -1,6 +1,6 @@
 {
   "id": "ta",
-  "title": "TA ECON 275; RELS 110",
+  "title": "Statistics TA (ECON 275)",
   "org": "Trinity Western University",
   "subcategories": [
     "hum-education",
@@ -9,5 +9,6 @@
   ],
   "dates": "August 2026 – Present",
   "location": "Langley, Canada",
+  "blurb": "Statistics, economics, & data analysis",
   "order": 0
 }

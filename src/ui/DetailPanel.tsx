@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useStore } from '../state/store'
 import { byId } from '../data/experiences'
 import { useContent } from '../content/useContent'
+import { BlurbText } from './BlurbText'
 
 /** Soft rise — opacity + transform only (filter blur transitions flake on Windows). */
 const PANEL_MS = 520
@@ -162,18 +163,17 @@ export function DetailPanel() {
         </p>
       ) : null}
 
-      {/* text description — pre-line keeps CMS Enter / newlines */}
+      {/* text description — Enter = line break; "- " / "* " = bullets */}
       {blurb ? (
-        <p
-          style={{
-            font: '400 0.9375rem/1.55 var(--sans)',
-            marginTop: '0.35rem',
-            color: 'var(--fg)',
-            whiteSpace: 'pre-line',
-          }}
-        >
-          {blurb}
-        </p>
+        <div style={{ marginTop: '0.35rem' }}>
+          <BlurbText
+            text={blurb}
+            style={{
+              font: '400 0.9375rem/1.55 var(--sans)',
+              color: 'var(--fg)',
+            }}
+          />
+        </div>
       ) : null}
 
       {exp.links?.length ? (

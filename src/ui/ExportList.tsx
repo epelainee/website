@@ -6,6 +6,7 @@ import {
 } from '../data/experiences'
 import { useContent } from '../content/useContent'
 import { useStore } from '../state/store'
+import { BlurbText } from './BlurbText'
 
 /** Tab-scoped unlock flag — obscurity only, not real auth. */
 const UNLOCK_KEY = 'export-list-unlocked'
@@ -322,7 +323,11 @@ export function ExportList() {
                   </>
                 ) : null}
               </div>
-              {blurb ? <p className="export-print-blurb">{blurb}</p> : null}
+              {blurb ? (
+                <div className="export-print-blurb">
+                  <BlurbText text={blurb} />
+                </div>
+              ) : null}
               {exp.links?.length ? (
                 <ul className="export-print-links">
                   {exp.links.map((l) => (

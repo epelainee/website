@@ -213,7 +213,32 @@ canvas {
   .export-print-blurb {
     margin: 0.45rem 0 0;
     font: 400 0.875rem/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .export-print-blurb p {
+    margin: 0;
     white-space: pre-line;
+  }
+
+  .export-print-blurb p + p,
+  .export-print-blurb p + ul,
+  .export-print-blurb ul + p,
+  .export-print-blurb ul + ul {
+    margin-top: 0.45em;
+  }
+
+  .export-print-blurb ul {
+    margin: 0;
+    padding-left: 1.15em;
+    list-style-type: disc;
+  }
+
+  .export-print-blurb li {
+    margin-top: 0.2em;
+  }
+
+  .export-print-blurb li:first-child {
+    margin-top: 0;
   }
 
   .export-print-links {

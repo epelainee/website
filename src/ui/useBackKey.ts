@@ -3,7 +3,7 @@ import { useStore } from '../state/store'
 
 /**
  * Wires Esc and Backspace to the store's layered `back()`:
- * panel → subcategory → category → root → re-collapse to the intro star.
+ * export list → panel → search → path → re-collapse to the intro star.
  *
  * Lives on `window` so it works regardless of focus, but stands down when the
  * target is editable. Backspace is prevented as a defence against browsers

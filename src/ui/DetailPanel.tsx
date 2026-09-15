@@ -162,13 +162,14 @@ export function DetailPanel() {
         </p>
       ) : null}
 
-      {/* text description */}
+      {/* text description — pre-line keeps CMS Enter / newlines */}
       {blurb ? (
         <p
           style={{
             font: '400 0.9375rem/1.55 var(--sans)',
             marginTop: '0.35rem',
             color: 'var(--fg)',
+            whiteSpace: 'pre-line',
           }}
         >
           {blurb}

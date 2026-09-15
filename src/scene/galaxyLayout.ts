@@ -155,8 +155,7 @@ export function starPoint(
  *    world space.
  */
 
-/**
- * Outer orbit vs half-height of the frustum. Below 1 leaves air for bottom
+/** Outer orbit vs half-height of the frustum. Below 1 leaves air for bottom
  * chrome (name / mailto) plus a small margin so nodes don't kiss the text.
  */
 export const FIELD_FILL_Y = 0.72
@@ -167,6 +166,22 @@ export const FIELD_FILL_X = 0.92
 /** Innermost and outermost ring, as a fraction of the field's radius. */
 const ARC_INNER = 0.38
 const ARC_OUTER = 0.97
+
+/**
+ * True when a normalised device coord (−1…1, y up) sits inside the settled
+ * galaxy oval. Used so empty-space "back" only fires outside the field, not
+ * in the gaps between stars.
+ */
+export function isInsideGalaxyField(
+  ndcX: number,
+  ndcY: number,
+  /** Slight expansion so outer-ring near-misses still count as inside. */
+  pad = 1.06,
+): boolean {
+  const rx = FIELD_FILL_X * ARC_OUTER * pad
+  const ry = FIELD_FILL_Y * ARC_OUTER * pad
+  return (ndcX / rx) ** 2 + (ndcY / ry) ** 2 <= 1
+}
 
 /**
  * Angular speed around the hub (rad/s). Full rings can spin rigidly again —

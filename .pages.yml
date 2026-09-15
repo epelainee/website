@@ -121,7 +121,7 @@ content:
       - name: blurb
         label: Description
         type: text
-        description: Leave blank to hide in the detail panel.
+        description: Multi-line — press Enter for line breaks. Leave blank to hide in the detail panel.
       - name: kind
         label: Kind
         type: select

@@ -17,9 +17,10 @@ import { useViewport } from './useViewport'
  * Shows exactly one level: categories at root, then the entered category's
  * subcategories. Esc / Backspace steps back via `back()`.
  *
- * The central star opens and closes it (`ringOpen`). Selections deliberately do
- * not close it, so drilling category -> subcategory is one continuous motion
- * rather than a trip back to the centre for every step.
+ * The central star opens and closes it (`ringOpen`). Picking a category keeps
+ * the ring open so you can choose a subcategory; picking a subcategory closes
+ * it so the filtered galaxy stays clear. Re-click the star to show choices
+ * again.
  *
  * Compact (mobile): vertical column through the hub with a clear gap for the
  * star — not a ring — so labels stay readable and never cover the core.

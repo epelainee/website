@@ -20,7 +20,7 @@ const chrome: CSSProperties = {
 
 const nameStyle: CSSProperties = {
   font: '400 0.8125rem/1 var(--mono)',
-  letterSpacing: '0.22em',
+  letterSpacing: '0.1em',
   textTransform: 'uppercase',
   whiteSpace: 'nowrap',
 }
@@ -68,7 +68,7 @@ export function NamePlate() {
             : 'max(5.5rem, env(safe-area-inset-right))',
           display: 'flex',
           flexDirection: 'column',
-          gap: '0.55rem',
+          gap: '0.3rem',
           ...introDissolve,
         }}
       >
@@ -78,7 +78,7 @@ export function NamePlate() {
             margin: 0,
             whiteSpace: 'nowrap',
             font: compact
-              ? '400 0.625rem/1 var(--mono)'
+              ? '400 0.75rem/1 var(--mono)'
               : nameStyle.font,
             letterSpacing: compact ? '0.1em' : nameStyle.letterSpacing,
           }}
@@ -88,9 +88,8 @@ export function NamePlate() {
         <p
           style={{
             margin: 0,
-            font: '400 0.625rem/1.35 var(--mono)',
+            font: '400 0.75rem/1.2 var(--mono)',
             letterSpacing: '0.1em',
-            textTransform: 'uppercase',
             color: 'rgba(255, 255, 255, 0.78)',
             maxWidth: compact ? '100%' : '16rem',
             whiteSpace: 'normal',
@@ -119,14 +118,13 @@ export function NamePlate() {
           ...chrome,
           left: 'max(1.25rem, env(safe-area-inset-left))',
           right: 'max(1.25rem, env(safe-area-inset-right))',
-          // Compact + wide: tagline sits on the bottom band (cue stacks above on compact).
           bottom: 'max(1.25rem, env(safe-area-inset-bottom))',
           font: '400 0.6875rem/1.45 var(--mono)',
           letterSpacing: '0.06em',
           maxWidth: compact
             ? 'min(22rem, calc(100vw - 2.5rem))'
             : 'min(22rem, calc(100vw - 12rem))',
-          whiteSpace: 'normal',
+          whiteSpace: 'pre-line',
           ...introDissolve,
         }}
       >

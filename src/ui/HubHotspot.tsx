@@ -2,26 +2,6 @@ import { useEffect, useState } from 'react'
 import { coreClick } from '../scene/coreClick'
 import { useStore } from '../state/store'
 import { useContent } from '../content/useContent'
-import { useViewport } from './useViewport'
-
-/** Once mobile has shown the first-visit filter tip, never again. */
-const HUB_TIP_SEEN_KEY = 'hub-filter-tip-seen'
-
-function tipAlreadySeen(): boolean {
-  try {
-    return localStorage.getItem(HUB_TIP_SEEN_KEY) === '1'
-  } catch {
-    return false
-  }
-}
-
-function markTipSeen() {
-  try {
-    localStorage.setItem(HUB_TIP_SEEN_KEY, '1')
-  } catch {
-    /* private mode — tip may reappear this session only */
-  }
-}
 
 /**
  * The central star's click target.
@@ -31,12 +11,12 @@ function markTipSeen() {
  * occlude it — `Core` projects world origin into `#hub-hotspot` each frame.
  *
  * Intro uses a larger hit area to match the collapsed star; galaxy stays tight
- * on the small core. Desktop hover shows a filter tooltip. Mobile shows
- * "Filter by category" once on first galaxy entry, then never again.
+ * on the small core. On galaxy entry the filter tooltip auto-shows once; any
+ * further pointer interaction dismisses it, then it only appears on hover /
+ * focus-visible (desktop).
  */
 export function HubHotspot() {
   const { siteSettings } = useContent()
-  const { coarse } = useViewport()
   const phase = useStore((s) => s.phase)
   const ringOpen = useStore((s) => s.ringOpen)
   const toggleRing = useStore((s) => s.toggleRing)
@@ -52,22 +32,28 @@ export function HubHotspot() {
 
   const tip = ringOpen ? tips.hideFilters : tips.filterByCategory
 
-  // Mobile: first galaxy visit only. Desktop uses CSS :hover / :focus-visible.
-  const [mobileTip, setMobileTip] = useState(false)
+  // Force-show once when the galaxy settles; cleared on any further interaction.
+  const [introTip, setIntroTip] = useState(false)
 
   useEffect(() => {
-    if (!coarse || !galaxy) return
-    if (tipAlreadySeen()) return
-    setMobileTip(true)
-  }, [coarse, galaxy])
+    if (galaxy) {
+      setIntroTip(true)
+      return
+    }
+    setIntroTip(false)
+  }, [galaxy])
 
   useEffect(() => {
-    if (!ringOpen || !mobileTip) return
-    setMobileTip(false)
-    markTipSeen()
-  }, [ringOpen, mobileTip])
-
-  const showTip = galaxy && (!coarse || mobileTip)
+    if (!introTip) return
+    if (ringOpen) {
+      setIntroTip(false)
+      return
+    }
+    const dismiss = () => setIntroTip(false)
+    window.addEventListener('pointerdown', dismiss, { capture: true })
+    return () =>
+      window.removeEventListener('pointerdown', dismiss, { capture: true })
+  }, [introTip, ringOpen])
 
   return (
     <button
@@ -78,10 +64,7 @@ export function HubHotspot() {
           crush()
           return
         }
-        if (mobileTip) {
-          setMobileTip(false)
-          markTipSeen()
-        }
+        setIntroTip(false)
         // Open: pulse + flash. Close: pulse only. Re-click restarts the kick.
         coreClick.pulse = 1
         coreClick.flash = ringOpen ? 0 : 1
@@ -116,12 +99,12 @@ export function HubHotspot() {
         WebkitTapHighlightColor: 'transparent',
       }}
     >
-      {showTip ? (
+      {galaxy ? (
         <span
-          className={`hub-tooltip${mobileTip ? ' is-on' : ''}`}
+          className={`hub-tooltip${introTip ? ' is-on' : ''}`}
           aria-hidden="true"
         >
-          {coarse ? tips.filterByCategory : tip}
+          {tip}
         </span>
       ) : null}
     </button>

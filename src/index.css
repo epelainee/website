@@ -38,6 +38,13 @@ canvas {
   outline: none;
 }
 
+/* Wraps the interactive galaxy chrome so print CSS can hide it in one shot. */
+.app-no-print {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 /* Esc / keyboard focus must not draw a white ring on the circular hotspot. */
 #hub-hotspot:focus,
 #hub-hotspot:focus-visible {
@@ -113,6 +120,108 @@ canvas {
 
 .social-icon:active {
   transform: scale(0.96);
+}
+
+/* Private export list — screen checklist vs print document. */
+.export-list-print {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 1.4cm;
+  }
+
+  html,
+  body,
+  #root {
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .app-no-print,
+  .export-list-screen {
+    display: none !important;
+  }
+
+  .export-list-print {
+    display: block !important;
+    padding: 0;
+    color: #000;
+    background: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .export-print-header {
+    margin-bottom: 1.35rem;
+  }
+
+  .export-print-header h1 {
+    margin: 0 0 0.35rem;
+    font: 600 1.55rem/1.2 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .export-print-header p {
+    margin: 0;
+    font: 400 0.75rem/1.35 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    color: #444;
+  }
+
+  .export-print-header a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  .export-print-entry {
+    break-inside: avoid;
+    margin: 0 0 1.1rem;
+    padding: 0;
+  }
+
+  /* Left: title / company. Right: period above location, shared column. */
+  .export-print-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    column-gap: 1.25rem;
+    row-gap: 0.12rem;
+    align-items: baseline;
+  }
+
+  .export-print-entry h2 {
+    margin: 0;
+    font: 600 1rem/1.25 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .export-print-meta {
+    margin: 0;
+    font: 400 0.8rem/1.35 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+  }
+
+  .export-print-aside {
+    margin: 0;
+    justify-self: end;
+    text-align: right;
+    font: 400 0.8rem/1.35 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+    white-space: nowrap;
+  }
+
+  .export-print-blurb {
+    margin: 0.45rem 0 0;
+    font: 400 0.875rem/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    white-space: pre-line;
+  }
+
+  .export-print-links {
+    margin: 0.4rem 0 0;
+    padding-left: 1.1rem;
+    font: 400 0.75rem/1.45 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    color: #333;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

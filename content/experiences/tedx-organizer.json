@@ -13,5 +13,11 @@
   "location": "Jakarta, Indonesia",
   "blurb": "Co-organized a licensed TED event. Handled executive direction, marketing, technical production, and logistics @ TEDxSPH Youth.",
   "kind": "certification",
-  "order": 30
+  "order": 30,
+  "links": [
+    {
+      "label": "TED Profile",
+      "url": "https://www.ted.com/profiles/45986437"
+    }
+  ]
 }

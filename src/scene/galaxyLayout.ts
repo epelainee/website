@@ -168,22 +168,6 @@ const ARC_INNER = 0.38
 const ARC_OUTER = 0.97
 
 /**
- * True when a normalised device coord (−1…1, y up) sits inside the settled
- * galaxy oval. Used so empty-space "back" only fires outside the field, not
- * in the gaps between stars.
- */
-export function isInsideGalaxyField(
-  ndcX: number,
-  ndcY: number,
-  /** Slight expansion so outer-ring near-misses still count as inside. */
-  pad = 1.06,
-): boolean {
-  const rx = FIELD_FILL_X * ARC_OUTER * pad
-  const ry = FIELD_FILL_Y * ARC_OUTER * pad
-  return (ndcX / rx) ** 2 + (ndcY / ry) ** 2 <= 1
-}
-
-/**
  * Angular speed around the hub (rad/s). Full rings can spin rigidly again —
  * the old half-arc could not. Slight Kepler falloff so inner rings lap faster.
  */

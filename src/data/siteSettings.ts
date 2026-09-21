@@ -34,4 +34,10 @@ export type SiteSettings = {
     filterByCategory: string
     hideFilters: string
   }
+  navHelp: {
+    title: string
+    steps: string[]
+    /** Touch-oriented copy; falls back to `steps` when absent. */
+    stepsTouch?: string[]
+  }
 }

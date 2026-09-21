@@ -13,33 +13,24 @@ import { NamePlate } from './ui/NamePlate'
 import { SocialLinks } from './ui/SocialLinks'
 import { LocalClock } from './ui/LocalClock'
 import { GalaxySearch } from './ui/GalaxySearch'
+import { NavHelp } from './ui/NavHelp'
 import { ExportList } from './ui/ExportList'
 import { dustCountFor, shellCountFor, useViewport } from './ui/useViewport'
 import { useBackKey } from './ui/useBackKey'
 import { CRUSH_DURATION, useStore } from './state/store'
-import { isInsideGalaxyField } from './scene/galaxyLayout'
-
-/** Map a client point on the canvas to NDC (−1…1, y up). */
-function clientToNdc(
-  clientX: number,
-  clientY: number,
-  rect: DOMRect,
-): { x: number; y: number } {
-  const x = ((clientX - rect.left) / rect.width) * 2 - 1
-  const y = -(((clientY - rect.top) / rect.height) * 2 - 1)
-  return { x, y }
-}
 
 export default function App() {
   const phase = useStore((s) => s.phase)
   const panelOpen = useStore((s) => s.selectedId !== null)
   const exportOpen = useStore((s) => s.exportOpen)
+  const helpOpen = useStore((s) => s.helpOpen)
+  const setHelpOpen = useStore((s) => s.setHelpOpen)
   const back = useStore((s) => s.back)
   const { coarse, width, compact } = useViewport()
   useBackKey()
 
   const galaxySettled = phase === 'galaxy'
-  const galaxyChrome = galaxySettled && !panelOpen && !exportOpen
+  const galaxyChrome = galaxySettled && !panelOpen && !exportOpen && !helpOpen
 
   return (
     <>
@@ -52,22 +43,13 @@ export default function App() {
           dpr={[1, coarse ? 1.5 : 2]}
           onPointerMissed={(e) => {
             spawnEmptyRipple(e.clientX, e.clientY)
-            if (phase !== 'galaxy' || exportOpen) return
+            if (phase !== 'galaxy' || exportOpen || helpOpen) return
             // R3F types this as MouseEvent; runtime is often a PointerEvent.
             const pe = e as MouseEvent & { pointerType?: string }
             if (pe.pointerType === 'mouse' && e.button !== 0) return
-            // Only leave / step back outside the oval — gaps between stars
-            // must not count as "outside" (especially on touch).
-            const canvas =
-              document.querySelector('.app-no-print canvas') ??
-              document.querySelector('canvas')
-            if (!(canvas instanceof HTMLCanvasElement)) return
-            const { x, y } = clientToNdc(
-              e.clientX,
-              e.clientY,
-              canvas.getBoundingClientRect(),
-            )
-            if (isInsideGalaxyField(x, y)) return
+            // Empty space goes back — inside the field too. Stars already
+            // swallow the pointer via raycast (fatter on touch), so a miss
+            // means the click was not near a floating node.
             back()
           }}
         >
@@ -92,6 +74,7 @@ export default function App() {
         <SocialLinks />
         <LocalClock />
         <GalaxySearch />
+        <NavHelp />
 
         {/* Intro copyright (wide). Dematerialises with the burst. */}
         {!compact && (
@@ -121,73 +104,74 @@ export default function App() {
           </p>
         )}
 
-        {/* Desktop keyboard hint. */}
-        {galaxyChrome && !coarse && (
-          <p
-            aria-hidden="true"
-            style={{
-              position: 'fixed',
-              right: 'max(1.25rem, env(safe-area-inset-right))',
-              bottom: 'max(1.25rem, env(safe-area-inset-bottom))',
-              zIndex: 20,
-              margin: 0,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              font: '400 0.625rem/1 var(--mono)',
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              color: 'rgba(255, 255, 255, 0.88)',
-              textShadow: '0 0 8px #000',
-              pointerEvents: 'none',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            <span
-              style={{
-                border: '1px solid rgba(255, 255, 255, 0.4)',
-                borderRadius: '3px',
-                padding: '0.25rem 0.4rem',
-              }}
-            >
-              esc
-            </span>
-            back
-          </p>
-        )}
-
-        {/* Touch back — same ladder as Esc (export → panel → path → intro). */}
-        {galaxySettled && coarse && !exportOpen && (
-          <button
-            type="button"
-            onClick={() => back()}
-            aria-label="Go back"
+        {/* Bottom-right chrome: help (?), plus touch back. */}
+        {galaxyChrome && (
+          <div
             style={{
               position: 'fixed',
               right: 'max(1rem, env(safe-area-inset-right))',
               bottom: 'max(1rem, env(safe-area-inset-bottom))',
               zIndex: 45,
-              margin: 0,
-              display: 'inline-flex',
+              display: 'flex',
               alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.55rem 0.75rem',
-              background: 'rgba(0, 0, 0, 0.55)',
-              border: '1px solid rgba(255, 255, 255, 0.35)',
-              borderRadius: '999px',
-              color: 'rgba(255, 255, 255, 0.95)',
-              font: '400 0.6875rem/1 var(--mono)',
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              textShadow: '0 0 8px #000',
-              backdropFilter: 'blur(3px)',
-              cursor: 'pointer',
-              WebkitTapHighlightColor: 'transparent',
+              gap: '0.45rem',
             }}
           >
-            <span aria-hidden="true">←</span>
-            back
-          </button>
+            {coarse && (
+              <button
+                type="button"
+                onClick={() => back()}
+                aria-label="Go back"
+                style={{
+                  margin: 0,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  padding: '0.55rem 0.75rem',
+                  background: 'rgba(0, 0, 0, 0.55)',
+                  border: '1px solid rgba(255, 255, 255, 0.35)',
+                  borderRadius: '999px',
+                  color: 'rgba(255, 255, 255, 0.95)',
+                  font: '400 0.6875rem/1 var(--mono)',
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  textShadow: '0 0 8px #000',
+                  backdropFilter: 'blur(3px)',
+                  cursor: 'pointer',
+                  WebkitTapHighlightColor: 'transparent',
+                }}
+              >
+                <span aria-hidden="true">←</span>
+                back
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setHelpOpen(true)}
+              aria-label="Navigation help"
+              title="Navigation help"
+              style={{
+                margin: 0,
+                width: '2.1rem',
+                height: '2.1rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+                background: 'rgba(0, 0, 0, 0.55)',
+                border: '1px solid rgba(255, 255, 255, 0.35)',
+                borderRadius: '999px',
+                color: 'rgba(255, 255, 255, 0.95)',
+                font: '400 0.875rem/1 var(--mono)',
+                textShadow: '0 0 8px #000',
+                backdropFilter: 'blur(3px)',
+                cursor: 'pointer',
+                WebkitTapHighlightColor: 'transparent',
+              }}
+            >
+              ?
+            </button>
+          </div>
         )}
       </div>
 

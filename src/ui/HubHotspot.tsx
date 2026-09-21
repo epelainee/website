@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { coreClick } from '../scene/coreClick'
 import { useStore } from '../state/store'
 import { useContent } from '../content/useContent'
@@ -11,9 +10,7 @@ import { useContent } from '../content/useContent'
  * occlude it — `Core` projects world origin into `#hub-hotspot` each frame.
  *
  * Intro uses a larger hit area to match the collapsed star; galaxy stays tight
- * on the small core. On galaxy entry the filter tooltip auto-shows once; any
- * further pointer interaction dismisses it, then it only appears on hover /
- * focus-visible (desktop).
+ * on the small core. Filter tip appears on hover / focus-visible only.
  */
 export function HubHotspot() {
   const { siteSettings } = useContent()
@@ -32,29 +29,6 @@ export function HubHotspot() {
 
   const tip = ringOpen ? tips.hideFilters : tips.filterByCategory
 
-  // Force-show once when the galaxy settles; cleared on any further interaction.
-  const [introTip, setIntroTip] = useState(false)
-
-  useEffect(() => {
-    if (galaxy) {
-      setIntroTip(true)
-      return
-    }
-    setIntroTip(false)
-  }, [galaxy])
-
-  useEffect(() => {
-    if (!introTip) return
-    if (ringOpen) {
-      setIntroTip(false)
-      return
-    }
-    const dismiss = () => setIntroTip(false)
-    window.addEventListener('pointerdown', dismiss, { capture: true })
-    return () =>
-      window.removeEventListener('pointerdown', dismiss, { capture: true })
-  }, [introTip, ringOpen])
-
   return (
     <button
       id="hub-hotspot"
@@ -64,7 +38,6 @@ export function HubHotspot() {
           crush()
           return
         }
-        setIntroTip(false)
         // Open: pulse + flash. Close: pulse only. Re-click restarts the kick.
         coreClick.pulse = 1
         coreClick.flash = ringOpen ? 0 : 1
@@ -100,10 +73,7 @@ export function HubHotspot() {
       }}
     >
       {galaxy ? (
-        <span
-          className={`hub-tooltip${introTip ? ' is-on' : ''}`}
-          aria-hidden="true"
-        >
+        <span className="hub-tooltip" aria-hidden="true">
           {tip}
         </span>
       ) : null}

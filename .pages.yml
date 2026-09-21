@@ -232,3 +232,20 @@ content:
           - name: hideFilters
             label: Hide filters
             type: string
+      - name: navHelp
+        label: Navigation help
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: steps
+            label: Steps (desktop)
+            type: string
+            list: true
+            description: Public navigation tips only (no private shortcuts).
+          - name: stepsTouch
+            label: Steps (touch)
+            type: string
+            list: true
+            description: Touch wording for the same public tips. Back is added in the UI.

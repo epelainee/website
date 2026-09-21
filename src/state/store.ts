@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import type { CategoryId } from '../data/categories'
+import { hasSeenNavHelp, markNavHelpSeen } from './navHelpSeen'
 
 export type Phase = 'intro' | 'crushing' | 'galaxy'
 
@@ -33,6 +34,8 @@ type State = {
   exportOpen: boolean
   /** Experience ids checked for print. */
   exportSelectedIds: string[]
+  /** How-to-navigate manual. Auto-opens once on first galaxy visit. */
+  helpOpen: boolean
 
   crush: () => void
   setHovered: (id: string | null) => void
@@ -43,6 +46,7 @@ type State = {
   setExportOpen: (open: boolean) => void
   toggleExportId: (id: string) => void
   setExportSelectedIds: (ids: string[]) => void
+  setHelpOpen: (open: boolean) => void
 
   enterCategory: (id: CategoryId) => void
   enterSub: (id: string) => void
@@ -63,6 +67,7 @@ const leaveGalaxy = {
   searchOpen: false,
   exportOpen: false,
   exportSelectedIds: [] as string[],
+  helpOpen: false,
 }
 
 export const useStore = create<State>((set, get) => ({
@@ -76,6 +81,7 @@ export const useStore = create<State>((set, get) => ({
   searchOpen: false,
   exportOpen: false,
   exportSelectedIds: [],
+  helpOpen: false,
 
   /**
    * Intro -> crushing -> galaxy. Re-entry is guarded rather than queued; the
@@ -84,7 +90,16 @@ export const useStore = create<State>((set, get) => ({
   crush: () => {
     if (get().phase !== 'intro') return
     set({ phase: 'crushing' })
-    setTimeout(() => set({ phase: 'galaxy' }), CRUSH_DURATION * 1000)
+    setTimeout(() => {
+      set({ phase: 'galaxy' })
+      // First visit: show the manual after the field lands. Deferred so the
+      // burst click cannot land on a dialog that mounts under the cursor.
+      if (hasSeenNavHelp()) return
+      setTimeout(() => {
+        if (get().phase !== 'galaxy' || hasSeenNavHelp()) return
+        set({ helpOpen: true })
+      }, 600)
+    }, CRUSH_DURATION * 1000)
   },
 
   setHovered: (id) => set({ hoveredId: id }),
@@ -108,6 +123,7 @@ export const useStore = create<State>((set, get) => ({
       }
     }),
   setExportSelectedIds: (ids) => set({ exportSelectedIds: ids }),
+  setHelpOpen: (open) => set({ helpOpen: open }),
 
   enterCategory: (id) => set({ path: [id], ...afterChoice }),
 
@@ -126,10 +142,14 @@ export const useStore = create<State>((set, get) => ({
 
   /**
    * The keyboard "back": one press undoes the last spatial step, layered —
-   * export list → panel → search clears → search UI → path pop → intro star.
+   * help → export list → panel → search clears → search UI → path pop → intro.
    */
   back: () =>
     set((s) => {
+      if (s.helpOpen) {
+        markNavHelpSeen()
+        return { helpOpen: false }
+      }
       if (s.exportOpen) return { exportOpen: false }
       if (s.selectedId !== null) return { selectedId: null, hoveredId: null }
       if (s.searchQuery.trim()) return { searchQuery: '', hoveredId: null }

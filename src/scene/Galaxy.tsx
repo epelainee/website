@@ -295,6 +295,8 @@ const TOUCH_STAR5_SCALE = 0.85
  * matches the earlier ~2.5× bump that made fingers land without looking fat.
  */
 const TOUCH_HIT_PAD = 2.5
+/** Desktop halo so a near-miss still counts as a star, not empty-space back. */
+const DESKTOP_HIT_PAD = 1.7
 
 const _hitSphere = new Sphere()
 const _hitMatrix = new Matrix4()
@@ -305,14 +307,14 @@ const _hitPoint = new Vector3()
  * Sphere pick per instance — ignores star silhouette, good enough for fingers.
  * Skips near-zero scales so filtered-out nodes stay untouchable.
  */
-function fatInstanceRaycast(localRadius: number) {
+function fatInstanceRaycast(localRadius: number, pad: number) {
   return function raycast(
     this: InstancedMesh,
     raycaster: Raycaster,
     intersects: Intersection[],
   ) {
     if (this.count === 0) return
-    const threshold = localRadius * TOUCH_HIT_PAD
+    const threshold = localRadius * pad
     for (let i = 0; i < this.count; i++) {
       this.getMatrixAt(i, _hitMatrix)
       const sx = Math.hypot(
@@ -695,7 +697,8 @@ export function Galaxy({
   // Off-galaxy: disable raycasting so empty-space clicks reach `onPointerMissed`
   // (ripples) instead of landing on the collapsed / expanding instance cloud.
   // Also drop hover — pointerOut won't fire once raycast is stubbed out.
-  // Touch: fat sphere raycast so small visuals still catch fingers.
+  // Fat sphere raycast: fingers need a big target; desktop gets a smaller halo
+  // so a near-miss still selects a star instead of stepping back.
   useEffect(() => {
     const specs: Array<[InstancedMesh | null, number]> = [
       [sphereRef.current, NODE_RADIUS],
@@ -706,10 +709,11 @@ export function Galaxy({
       if (!mesh) continue
       if (!interactive) {
         mesh.raycast = () => {}
-      } else if (touch) {
-        mesh.raycast = fatInstanceRaycast(radius)
       } else {
-        mesh.raycast = InstancedMesh.prototype.raycast
+        mesh.raycast = fatInstanceRaycast(
+          radius,
+          touch ? TOUCH_HIT_PAD : DESKTOP_HIT_PAD,
+        )
       }
     }
     if (!interactive) {

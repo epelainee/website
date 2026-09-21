@@ -93,6 +93,18 @@ function loadSiteSettings(): SiteSettings {
     favicon: asMediaPath(first.favicon, '/favicon.png'),
     ogImage: asMediaPath(first.ogImage),
     socialLinks,
+    navHelp: {
+      title: first.navHelp?.title?.trim() || '✧˖°',
+      steps:
+        first.navHelp?.steps?.filter((s) => typeof s === 'string' && s.trim()) ??
+        [
+          'Click the center star to filter by category',
+          'Click a floating star to open its details',
+        ],
+      stepsTouch: first.navHelp?.stepsTouch?.filter(
+        (s) => typeof s === 'string' && s.trim(),
+      ),
+    },
   }
 }
 

@@ -75,8 +75,7 @@ canvas {
 }
 
 #hub-hotspot:hover .hub-tooltip,
-#hub-hotspot:focus-visible .hub-tooltip,
-.hub-tooltip.is-on {
+#hub-hotspot:focus-visible .hub-tooltip {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
@@ -97,12 +96,23 @@ canvas {
 
 @keyframes empty-ripple {
   from {
-    opacity: 0.7;
-    transform: scale(0.35);
+    transform: scale(0.4);
+    opacity: 0.9;
   }
   to {
+    transform: scale(4.2);
     opacity: 0;
-    transform: scale(14);
+  }
+}
+
+@keyframes nav-help-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 

@@ -31,5 +31,16 @@
     "introAria": "Burst the star to reveal the galaxy",
     "filterByCategory": "Filter by category",
     "hideFilters": "Hide filters"
+  },
+  "navHelp": {
+    "title": "✧˖°",
+    "steps": [
+      "Click the center star to filter by category",
+      "Click a floating star to open its details"
+    ],
+    "stepsTouch": [
+      "Tap the center star to filter by category",
+      "Tap a floating star to open its details"
+    ]
   }
 }

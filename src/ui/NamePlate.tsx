@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { CRUSH_DURATION, useStore } from '../state/store'
 import { useContent } from '../content/useContent'
 import {
@@ -34,6 +34,74 @@ const nameStyle: CSSProperties = {
 /** Single-line name — nbsp so words never break apart. */
 function solidName(name: string) {
   return name.replace(/ /g, '\u00a0')
+}
+
+/** How far a letter rises when the pointer is on it, or on a neighbour. */
+function letterLift(distance: number) {
+  if (distance === 0) return '-0.48em'
+  if (distance === 1) return '-0.16em'
+  return '0'
+}
+
+/**
+ * Intro name, one span per letter, so a hover lifts that letter and nudges
+ * the ones beside it. Tracking stays on the line so the word stays centred.
+ */
+function GreetingName({
+  name,
+  active,
+  compact,
+}: {
+  name: string
+  active: boolean
+  compact: boolean
+}) {
+  const [hover, setHover] = useState<number | null>(null)
+  const letters = Array.from(solidName(name))
+
+  return (
+    <p
+      aria-label={name}
+      style={{
+        ...nameStyle,
+        margin: 0,
+        font: compact
+          ? '400 0.9375rem/1.15 var(--mono)'
+          : '400 1.0625rem/1.15 var(--mono)',
+        letterSpacing: '0.18em',
+        // Tracking trails the last letter; pad the left so it stays centred.
+        paddingLeft: '0.18em',
+        pointerEvents: active ? 'auto' : 'none',
+      }}
+      onMouseLeave={() => setHover(null)}
+    >
+      {letters.map((ch, i) => {
+        const distance = hover === null ? 3 : Math.abs(hover - i)
+        const hovered = distance === 0
+        return (
+          <span
+            key={i}
+            className="greeting-letter"
+            aria-hidden="true"
+            onMouseEnter={() => setHover(i)}
+            style={{
+              transform: `translateY(${letterLift(distance)})`,
+              color: hovered
+                ? '#fff'
+                : distance === 1
+                  ? 'rgba(255, 255, 255, 0.98)'
+                  : undefined,
+              textShadow: hovered
+                ? '0 0 10px #000, 0 0 14px rgba(255, 255, 255, 0.55)'
+                : undefined,
+            }}
+          >
+            {ch}
+          </span>
+        )
+      })}
+    </p>
+  )
 }
 
 /**
@@ -103,20 +171,11 @@ export function NamePlate() {
               {siteSettings.greeting}
             </p>
           )}
-          <p
-            style={{
-              ...nameStyle,
-              margin: 0,
-              font: compact
-                ? '400 0.9375rem/1.15 var(--mono)'
-                : '400 1.0625rem/1.15 var(--mono)',
-              letterSpacing: '0.18em',
-              // Tracking trails the last letter; pad the left so it stays centred.
-              paddingLeft: '0.18em',
-            }}
-          >
-            {solidName(siteSettings.greetingName)}
-          </p>
+          <GreetingName
+            name={siteSettings.greetingName}
+            active={intro}
+            compact={compact}
+          />
         </div>
         {siteSettings.locationLine?.trim() && (
           <p

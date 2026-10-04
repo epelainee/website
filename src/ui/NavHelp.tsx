@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react'
 import { useStore } from '../state/store'
 import { useContent } from '../content/useContent'
 import { useViewport } from './useViewport'
@@ -16,6 +16,14 @@ const chromeText: CSSProperties = {
   textTransform: 'uppercase',
   color: 'rgba(255, 255, 255, 0.92)',
   textShadow: '0 0 10px #000',
+}
+
+/**
+ * Tracking is added after the last glyph, so a centred line sits a little left.
+ * Pad the left by the same amount — same fix as the intro name.
+ */
+const opticalCenter: CSSProperties = {
+  paddingLeft: '0.14em',
 }
 
 const keyBadge: CSSProperties = {
@@ -53,7 +61,6 @@ export function NavHelp() {
   const phase = useStore((s) => s.phase)
   const open = useStore((s) => s.helpOpen)
   const setHelpOpen = useStore((s) => s.setHelpOpen)
-  const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const openedAt = useRef(0)
   const help = siteSettings.navHelp
@@ -130,39 +137,29 @@ export function NavHelp() {
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-labelledby={titleId}
+        aria-label="Navigation help"
         tabIndex={-1}
         onPointerDown={(e) => e.stopPropagation()}
         style={{
-          width: 'min(30rem, 100%)',
+          position: 'relative',
+          width: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '1.1rem',
+          textAlign: 'center',
           outline: 'none',
         }}
       >
-        <h2
-          id={titleId}
-          style={{
-            ...chromeText,
-            ...rowIn(0),
-            font: '400 1rem/1 var(--mono)',
-            letterSpacing: '0.18em',
-          }}
-        >
-          {help.title}
-        </h2>
-
-        <hr style={{ ...rule, ...rowIn(1) }} />
-
         <ol
           style={{
             listStyle: 'none',
+            margin: 0,
+            padding: 0,
+            width: '100%',
             display: 'flex',
             flexDirection: 'column',
+            alignItems: 'center',
             gap: '0.85rem',
-            alignSelf: 'stretch',
           }}
         >
           {steps.map((step, i) => (
@@ -170,32 +167,55 @@ export function NavHelp() {
               key={i}
               style={{
                 ...chromeText,
-                ...rowIn(i + 2),
-                display: 'grid',
-                gridTemplateColumns: '2.25rem 1fr',
-                alignItems: 'baseline',
+                ...opticalCenter,
+                ...rowIn(i),
+                textAlign: 'center',
               }}
             >
               <span style={{ color: 'rgba(255, 255, 255, 0.45)' }}>
                 {String(i + 1).padStart(2, '0')}
-              </span>
-              <span>{step}</span>
+              </span>{' '}
+              {step}
             </li>
           ))}
         </ol>
 
-        <hr style={{ ...rule, ...rowIn(steps.length + 2) }} />
-
-        <p
+        {/* Hung below the centred steps so the hint does not pull them off centre. */}
+        <div
           style={{
-            ...chromeText,
-            ...rowIn(steps.length + 3),
-            font: '400 0.5625rem/1.4 var(--mono)',
-            color: 'rgba(255, 255, 255, 0.45)',
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            pointerEvents: 'none',
           }}
         >
-          {coarse ? 'Tap' : 'Click'} anywhere to close · reopen with ?
-        </p>
+          <hr
+            style={{
+              ...rule,
+              ...rowIn(steps.length),
+              width: 'min(16rem, 70%)',
+              marginTop: '1.1rem',
+            }}
+          />
+
+          <p
+            style={{
+              ...chromeText,
+              ...opticalCenter,
+              ...rowIn(steps.length + 1),
+              marginTop: '1.1rem',
+              font: '400 0.5625rem/1.4 var(--mono)',
+              color: 'rgba(255, 255, 255, 0.45)',
+              textAlign: 'center',
+            }}
+          >
+            {coarse ? 'Tap' : 'Click'} anywhere to close · reopen with ?
+          </p>
+        </div>
       </aside>
     </div>
   )

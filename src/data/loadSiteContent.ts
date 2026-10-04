@@ -104,7 +104,7 @@ function loadSiteSettings(): SiteSettings {
         '',
     },
     navHelp: {
-      title: first.navHelp?.title?.trim() || '✧˖°',
+      title: first.navHelp?.title?.trim() ?? '',
       steps:
         first.navHelp?.steps?.filter((s) => typeof s === 'string' && s.trim()) ??
         [

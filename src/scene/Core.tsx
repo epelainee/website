@@ -7,7 +7,17 @@ import {
   type Mesh,
   type MeshBasicMaterial,
 } from 'three'
-import { CLICK_DECAY, FLASH_AMP, PULSE_AMP, coreClick } from './coreClick'
+import {
+  BECKON_AMP,
+  BECKON_COUNT,
+  BECKON_DELAY,
+  BECKON_GLOW,
+  BECKON_PERIOD,
+  CLICK_DECAY,
+  FLASH_AMP,
+  PULSE_AMP,
+  coreClick,
+} from './coreClick'
 import { crush } from './crush'
 import { SPIKE_LENGTHS } from './galaxyLayout'
 import { useStore } from '../state/store'
@@ -39,6 +49,8 @@ export function Core() {
   const group = useRef<Group>(null)
   const mesh = useRef<Mesh>(null)
   const phase = useStore((s) => s.phase)
+  /** Clock time the landing beckon starts; null until the galaxy settles. */
+  const beckonAt = useRef<number | null>(null)
 
   /** The same eight spikes as the big star, so it reads as that star shrunk. */
   const shape = useMemo(() => {
@@ -77,15 +89,27 @@ export function Core() {
       coreClick.flash = Math.max(0, coreClick.flash - delta / CLICK_DECAY)
     }
 
+    const now = state.clock.elapsedTime
+    if (phase === 'galaxy' && beckonAt.current === null) {
+      beckonAt.current = now + BECKON_DELAY
+    }
+    // A real click means the hint landed; stop beckoning.
+    if (coreClick.pulse > 0) beckonAt.current = -Infinity
+    const bt = beckonAt.current === null ? -1 : now - beckonAt.current
+    const beckon =
+      bt >= 0 && bt < BECKON_COUNT * BECKON_PERIOD
+        ? Math.sin((Math.PI * bt) / BECKON_PERIOD) ** 2
+        : 0
+
     const pulse = coreClick.pulse
     const flash = coreClick.flash
-    g.scale.setScalar(reveal * (1 + pulse * PULSE_AMP))
+    g.scale.setScalar(reveal * (1 + pulse * PULSE_AMP + beckon * BECKON_AMP))
 
     const mat = mesh.current?.material
     if (mat && !Array.isArray(mat)) {
       // Rest stays full white; flash pushes channels above 1 so the halftone
       // reads a brighter kick on open.
-      const b = 1 + flash * FLASH_AMP
+      const b = 1 + flash * FLASH_AMP + beckon * BECKON_GLOW
       ;(mat as MeshBasicMaterial).color.setRGB(b, b, b)
     }
 

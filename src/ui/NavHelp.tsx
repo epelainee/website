@@ -2,30 +2,50 @@ import { useEffect, useId, useRef, type CSSProperties, type ReactNode } from 're
 import { useStore } from '../state/store'
 import { useContent } from '../content/useContent'
 import { useViewport } from './useViewport'
-import { markNavHelpSeen } from '../state/navHelpSeen'
 
-const PANEL_MS = 420
+const PANEL_MS = 520
+/** Gap between each row's dissolve-in, so the manual reads in like the intro chrome. */
+const ROW_STAGGER_MS = 70
 const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
-/** Ignore dismiss for a beat after open so a lingering click cannot burn first-show. */
+/** Ignore dismiss for a beat after open so the opening click cannot close it. */
 const DISMISS_GUARD_MS = 500
+
+const chromeText: CSSProperties = {
+  font: '400 0.6875rem/1.6 var(--mono)',
+  letterSpacing: '0.14em',
+  textTransform: 'uppercase',
+  color: 'rgba(255, 255, 255, 0.92)',
+  textShadow: '0 0 10px #000',
+}
 
 const keyBadge: CSSProperties = {
   display: 'inline-block',
   border: '1px solid rgba(255, 255, 255, 0.4)',
-  borderRadius: '3px',
-  padding: '0.2rem 0.35rem',
-  font: '400 0.625rem/1 var(--mono)',
-  letterSpacing: '0.14em',
-  textTransform: 'uppercase',
-  color: 'rgba(255, 255, 255, 0.88)',
-  verticalAlign: 'baseline',
+  borderRadius: '2px',
+  padding: '0.1rem 0.35rem',
+  margin: '0 0.15rem',
+  lineHeight: 1.2,
+}
+
+const rule: CSSProperties = {
+  width: '100%',
+  height: 1,
+  border: 'none',
+  background:
+    'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent)',
+}
+
+function rowIn(index: number): CSSProperties {
+  return {
+    animation: `nav-help-in ${PANEL_MS}ms ${EASE} ${index * ROW_STAGGER_MS}ms both`,
+  }
 }
 
 /**
- * First-visit navigation manual for the galaxy.
+ * Navigation manual for the galaxy. Opened only from the `?` control.
  *
- * Auto-opened from `crush()` after the field settles (see store). Marked seen
- * only when dismissed. The `?` control reopens it anytime.
+ * Styled as floating chrome rather than a card: mono uppercase over a dark
+ * veil, matching the intro and galaxy text instead of a boxed dialog.
  */
 export function NavHelp() {
   const { siteSettings } = useContent()
@@ -45,7 +65,6 @@ export function NavHelp() {
 
   const dismiss = () => {
     if (performance.now() - openedAt.current < DISMISS_GUARD_MS) return
-    markNavHelpSeen()
     setHelpOpen(false)
   }
 
@@ -57,25 +76,16 @@ export function NavHelp() {
 
   if (phase !== 'galaxy' || !open) return null
 
-  const rows: ReactNode[] = [
-    ...lines.map((line, i) => <li key={`s-${i}`}>{line}</li>),
-    <li key="back">
-      {coarse ? (
-        <>
-          To go back, tap{' '}
-          <span style={keyBadge}>
-            <span aria-hidden="true">← </span>back
-          </span>{' '}
-          or empty space
-        </>
-      ) : (
-        <>
-          To go back, press <span style={keyBadge}>esc</span> or click empty
-          space
-        </>
-      )}
-    </li>,
-  ]
+  const back: ReactNode = coarse ? (
+    <>
+      Tap <span style={keyBadge}>← back</span> or empty space to go back
+    </>
+  ) : (
+    <>
+      Press <span style={keyBadge}>esc</span> or click empty space to go back
+    </>
+  )
+  const steps: ReactNode[] = [...lines, back]
 
   return (
     <div
@@ -89,9 +99,33 @@ export function NavHelp() {
         placeItems: 'center',
         padding:
           'max(1.25rem, env(safe-area-inset-top)) max(1.25rem, env(safe-area-inset-right)) max(1.25rem, env(safe-area-inset-bottom)) max(1.25rem, env(safe-area-inset-left))',
-        background: 'rgba(0, 0, 0, 0.45)',
+        // Darkest behind the text, so it reads without needing a boxed card.
+        background:
+          'radial-gradient(ellipse 60% 45% at center, rgba(0, 0, 0, 0.94), rgba(0, 0, 0, 0.7))',
+        animation: `nav-help-veil ${PANEL_MS}ms ${EASE} both`,
       }}
     >
+      <button
+        type="button"
+        onClick={dismiss}
+        onPointerDown={(e) => e.stopPropagation()}
+        aria-label="Close help"
+        style={{
+          ...chromeText,
+          position: 'fixed',
+          top: 'max(1rem, env(safe-area-inset-top))',
+          right: 'max(1rem, env(safe-area-inset-right))',
+          padding: '0.4rem 0.5rem',
+          background: 'none',
+          border: 'none',
+          color: 'rgba(255, 255, 255, 0.7)',
+          cursor: 'pointer',
+          WebkitTapHighlightColor: 'transparent',
+        }}
+      >
+        close ×
+      </button>
+
       <aside
         ref={panelRef}
         role="dialog"
@@ -100,76 +134,67 @@ export function NavHelp() {
         tabIndex={-1}
         onPointerDown={(e) => e.stopPropagation()}
         style={{
-          position: 'relative',
-          width: 'min(20rem, calc(100vw - 2.5rem))',
-          padding: '1.35rem 1.4rem 1.25rem',
-          background: 'rgba(0, 0, 0, 0.88)',
-          backdropFilter: 'blur(8px)',
-          border: '1px solid rgba(255, 255, 255, 0.18)',
-          borderRadius: '4px',
-          color: 'rgba(255, 255, 255, 0.92)',
-          textAlign: 'center',
+          width: 'min(30rem, 100%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '1.1rem',
           outline: 'none',
-          animation: `nav-help-in ${PANEL_MS}ms ${EASE} both`,
         }}
       >
-        <button
-          type="button"
-          onClick={dismiss}
-          aria-label="Close help"
-          style={{
-            position: 'absolute',
-            top: '0.75rem',
-            right: '0.75rem',
-            padding: '0.35rem 0.45rem',
-            background: 'none',
-            border: 'none',
-            color: 'var(--dim)',
-            font: '400 1.25rem/1 var(--mono)',
-            cursor: 'pointer',
-            WebkitTapHighlightColor: 'transparent',
-          }}
-        >
-          ×
-        </button>
-
         <h2
           id={titleId}
           style={{
-            margin: '0 1.75rem 1rem',
-            font: '500 1.15rem/1.25 var(--sans)',
-            letterSpacing: '-0.02em',
-            color: 'rgba(255, 255, 255, 0.95)',
+            ...chromeText,
+            ...rowIn(0),
+            font: '400 1rem/1 var(--mono)',
+            letterSpacing: '0.18em',
           }}
         >
           {help.title}
         </h2>
 
-        <ul
+        <hr style={{ ...rule, ...rowIn(1) }} />
+
+        <ol
           style={{
-            margin: 0,
-            padding: 0,
             listStyle: 'none',
             display: 'flex',
             flexDirection: 'column',
-            gap: '0.7rem',
-            font: '400 0.8125rem/1.45 var(--sans)',
-            color: 'rgba(255, 255, 255, 0.82)',
+            gap: '0.85rem',
+            alignSelf: 'stretch',
           }}
         >
-          {rows}
-        </ul>
+          {steps.map((step, i) => (
+            <li
+              key={i}
+              style={{
+                ...chromeText,
+                ...rowIn(i + 2),
+                display: 'grid',
+                gridTemplateColumns: '2.25rem 1fr',
+                alignItems: 'baseline',
+              }}
+            >
+              <span style={{ color: 'rgba(255, 255, 255, 0.45)' }}>
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
+
+        <hr style={{ ...rule, ...rowIn(steps.length + 2) }} />
 
         <p
           style={{
-            margin: '1.15rem 0 0',
+            ...chromeText,
+            ...rowIn(steps.length + 3),
             font: '400 0.5625rem/1.4 var(--mono)',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            color: 'rgba(255, 255, 255, 0.4)',
+            color: 'rgba(255, 255, 255, 0.45)',
           }}
         >
-          Reopen anytime with ?
+          {coarse ? 'Tap' : 'Click'} anywhere to close · reopen with ?
         </p>
       </aside>
     </div>

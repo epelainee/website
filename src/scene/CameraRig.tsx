@@ -18,8 +18,25 @@ import { STAR_HALF_WIDTH_FRAC, STAR_RADIUS } from './galaxyLayout'
 /** Starting guess only; the rig computes the real distance on the first frame. */
 export const INTRO_Z = 7.4
 
-/** Leave a little air rather than letting the star touch the edges. */
-const INTRO_MARGIN = 1.02
+/** Leave room around the star for the intro text. */
+const INTRO_MARGIN = 1.6
+
+/**
+ * The intro text hangs below the star, so the star rides this far above centre
+ * to keep star + text balanced as one group. Eases to zero through the burst.
+ */
+const INTRO_LIFT_REM = 4
+
+/**
+ * The intact star's on-screen half-height as a CSS length, mirroring the fit
+ * below: height-bound on wide screens, width-bound on narrow ones.
+ */
+export const INTRO_STAR_HALF_HEIGHT_CSS = `min(${50 / INTRO_MARGIN}vh, ${
+  50 / INTRO_MARGIN / STAR_HALF_WIDTH_FRAC
+}vw)`
+
+/** The intact star's on-screen centre, as a CSS `top`. */
+export const INTRO_STAR_CENTER_CSS = `calc(50% - ${INTRO_LIFT_REM}rem)`
 
 /**
  * Settled distance. Any value frames the field — it stretches to fit — so this
@@ -54,9 +71,14 @@ export function CameraRig() {
 
     const e = easeInOutCubic(crush.progress)
     camera.position.z = introZ + (GALAXY_Z - introZ) * e
-    // Stays on the axis: the hub has to land on the exact centre of the screen,
-    // and the field is measured from this camera, so any lift would shift both.
-    camera.position.y = 0
+
+    // Back on the axis once settled: the hub has to land on the exact centre of
+    // the screen, and the field is measured from this camera.
+    const remPx =
+      parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
+    const worldPerPx =
+      (2 * introZ * Math.tan(MathUtils.degToRad(camera.fov) / 2)) / size.height
+    camera.position.y = -INTRO_LIFT_REM * remPx * worldPerPx * (1 - e)
   })
 
   return null

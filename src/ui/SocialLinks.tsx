@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react'
-import { CRUSH_DURATION, useStore } from '../state/store'
+import { useStore } from '../state/store'
 import { useContent } from '../content/useContent'
 import type { SocialIcon } from '../data/siteSettings'
 import { useViewport } from './useViewport'
@@ -16,7 +16,8 @@ const iconBtn: CSSProperties = {
   height: 28,
   color: 'rgba(255, 255, 255, 0.9)',
   textDecoration: 'none',
-  pointerEvents: 'auto',
+  // Follow the wrapping nav, so a faded-out row is not clickable.
+  pointerEvents: 'inherit',
   transition: `color ${PANEL_MS}ms ${EASE}, transform 180ms ${EASE}`,
 }
 
@@ -103,7 +104,7 @@ function IconGlyph({ icon }: { icon: SocialIcon }) {
   )
 }
 
-/** Icon row — nest under identity on compact intro; also used by fixed chrome. */
+/** Icon row — sits under the intro tagline; also used by fixed chrome. */
 export function SocialIconRow({ gap = '0.85rem' }: { gap?: string }) {
   const { siteSettings } = useContent()
   return (
@@ -118,46 +119,18 @@ export function SocialIconRow({ gap = '0.85rem' }: { gap?: string }) {
 }
 
 /**
- * Intro: top-right icon row (wide) or under identity (compact).
  * Galaxy: bottom-left icons on wide only — compact shows name alone.
- * Dissolves with burst / detail panel.
+ * Dissolves with detail panel.
  */
 export function SocialLinks() {
   const { compact } = useViewport()
   const phase = useStore((s) => s.phase)
   const panelOpen = useStore((s) => s.selectedId !== null)
-  const intro = phase === 'intro'
   const galaxyVisible =
     (phase === 'galaxy' || phase === 'crushing') && !panelOpen
 
   return (
     <>
-      {/* Wide intro only — compact nests icons under NamePlate identity. */}
-      {!compact && (
-        <nav
-          aria-label="Social links"
-          aria-hidden={!intro}
-          style={{
-            position: 'fixed',
-            right: 'max(1.5rem, env(safe-area-inset-right))',
-            top: 'max(1.5rem, env(safe-area-inset-top))',
-            zIndex: 20,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.85rem',
-            pointerEvents: intro ? 'auto' : 'none',
-            opacity: intro ? 1 : 0,
-            filter: intro ? 'blur(0)' : `blur(${DISSOLVE_BLUR})`,
-            transition: [
-              `opacity ${CRUSH_DURATION}s ${EASE}`,
-              `filter ${CRUSH_DURATION}s ${EASE}`,
-            ].join(', '),
-          }}
-        >
-          <SocialIconRow />
-        </nav>
-      )}
-
       {/* Wide galaxy only — compact keeps name alone (no icons). */}
       {!compact && (
         <nav

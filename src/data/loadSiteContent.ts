@@ -89,10 +89,20 @@ function loadSiteSettings(): SiteSettings {
   }))
   return {
     ...first,
+    greeting: first.greeting?.trim() ?? '',
+    greetingName: first.greetingName?.trim() || first.displayName,
     siteUrl: first.siteUrl?.trim() ?? '',
     favicon: asMediaPath(first.favicon, '/favicon.png'),
     ogImage: asMediaPath(first.ogImage),
     socialLinks,
+    hubTips: {
+      ...first.hubTips,
+      introHint: first.hubTips?.introHint?.trim() ?? '',
+      introHintTouch:
+        first.hubTips?.introHintTouch?.trim() ||
+        first.hubTips?.introHint?.trim() ||
+        '',
+    },
     navHelp: {
       title: first.navHelp?.title?.trim() || '✧˖°',
       steps:

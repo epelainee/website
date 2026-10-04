@@ -17,3 +17,13 @@ export const FLASH_AMP = 0.45
 
 /** Seconds for pulse/flash to decay from 1 → 0. */
 export const CLICK_DECAY = 0.3
+
+/**
+ * Landing beckon: a few slow swells once the galaxy first settles, hinting the
+ * core is clickable. Smooth rather than the click's kick.
+ */
+export const BECKON_DELAY = 0.5
+export const BECKON_PERIOD = 1.1
+export const BECKON_COUNT = 2
+export const BECKON_AMP = 0.2
+export const BECKON_GLOW = 0.3

@@ -244,8 +244,8 @@ export type NodeLayout = {
   phase: number
   /** Depth jitter, for a little parallax. */
   z: number
-  /** Per-node size multiplier, so the field does not look uniform. */
-  scale: number
+  /** 0..1 size jitter, so the field does not look uniform. Each kind maps it to its own range. */
+  sizeJitter: number
   /** Position inside the star, before the burst. */
   collapsed: [number, number, number]
   /**
@@ -294,7 +294,7 @@ export function buildLayout(
         angle: base + jitterAngle,
         phase: hash01(id, 3) * Math.PI * 2,
         z: (hash01(id, 5) - 0.5) * 0.6,
-        scale: 0.75 + hash01(id, 4) * 0.5,
+        sizeJitter: hash01(id, 4),
         collapsed: starPoint(id, STAR_RADIUS),
         delay: arc * 0.3,
       })

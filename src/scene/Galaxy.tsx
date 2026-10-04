@@ -57,12 +57,20 @@ const dummy = new Object3D()
  * fall between samples and flicker as it drifts. NODE_RADIUS is set against
  * that floor, not for looks alone.
  */
-/** Desktop sphere size. Mobile shrinks via `TOUCH_NODE_SCALE`. */
-const NODE_RADIUS = 0.16
-/** 4-point internship stars — a bit larger than spheres. */
-const STAR4_OUTER = NODE_RADIUS * 1.35
-/** 5-point certification stars — clearly larger so kind reads at a glance. */
-const STAR5_OUTER = NODE_RADIUS * 1.9
+/** Shared size unit for every node kind. Mobile shrinks via `TOUCH_NODE_SCALE`. */
+const NODE_UNIT = 0.16
+/** Desktop sphere size. */
+const NODE_RADIUS = NODE_UNIT * 0.85
+/** 4-point internship stars — clearly larger than spheres. */
+const STAR4_OUTER = NODE_UNIT * 1.55
+/** 5-point certification stars — largest so kind reads at a glance. */
+const STAR5_OUTER = NODE_UNIT * 1.7
+/**
+ * Per-kind size ranges for `sizeJitter`. Stars sit higher and narrower so the
+ * smallest star still reads bigger than the largest sphere.
+ */
+const SPHERE_SCALE: [number, number] = [0.75, 1.1]
+const STAR_SCALE: [number, number] = [1.05, 1.25]
 const DUST_COUNT = 6000
 
 /**
@@ -91,6 +99,13 @@ const COLLAPSED_NODE_SCALE = 0.2
  */
 const DUST_SIZE_COLLAPSED = 0.17
 const DUST_SIZE_SETTLED = 0.1
+
+/**
+ * Dust orbits and sways slower than the nodes. Settled motes are smaller than a
+ * halftone cell, so they blink each time they cross a cell centre; slower motion
+ * means fewer blinks.
+ */
+const DUST_MOTION = 0.4
 
 /**
  * Keep-out radius around the hub, in CSS pixels.
@@ -285,18 +300,18 @@ function staggered(raw: number, delay: number) {
  * Tuned so mobile world size stays ~same after the desktop radius bump.
  * Finger hits use a fatter raycast sphere — see `TOUCH_HIT_PAD` — not bigger meshes.
  */
-const TOUCH_NODE_SCALE = 0.58
-const TOUCH_STAR4_SCALE = 0.76
-/** Keep 5-point stars reading larger than 4-point on touch too. */
-const TOUCH_STAR5_SCALE = 0.85
+const TOUCH_NODE_SCALE = 0.72
+const TOUCH_STAR4_SCALE = 0.7
+/** Just over the 4-point stars on touch — any more and they swamp a phone screen. */
+const TOUCH_STAR5_SCALE = 0.66
 
 /**
  * Touch pick radius vs rendered geo radius. Visual stays small; hit sphere
  * matches the earlier ~2.5× bump that made fingers land without looking fat.
  */
 const TOUCH_HIT_PAD = 2.5
-/** Desktop halo so a near-miss still counts as a star, not empty-space back. */
-const DESKTOP_HIT_PAD = 1.7
+/** Desktop picks on the star's own outer radius — a mouse is precise. */
+const DESKTOP_HIT_PAD = 1.0
 
 const _hitSphere = new Sphere()
 const _hitMatrix = new Matrix4()
@@ -545,6 +560,7 @@ export function Galaxy({
       mesh: InstancedMesh | null,
       indices: number[],
       touchScale: number,
+      [minScale, maxScale]: [number, number],
     ) => {
       if (!mesh || indices.length === 0) return
       for (let j = 0; j < indices.length; j++) {
@@ -553,7 +569,7 @@ export function Galaxy({
         const e = staggered(p, n.delay)
         dummy.position.set(live[i * 3], live[i * 3 + 1], live[i * 3 + 2])
         dummy.scale.setScalar(
-          n.scale *
+          (minScale + n.sizeJitter * (maxScale - minScale)) *
             (n.id === hoveredId ? HOVER_SCALE : 1) *
             (touch ? touchScale : 1) *
             (COLLAPSED_NODE_SCALE + (1 - COLLAPSED_NODE_SCALE) * e) *
@@ -565,9 +581,9 @@ export function Galaxy({
       mesh.instanceMatrix.needsUpdate = true
     }
 
-    writeGroup(sphereRef.current, groups.sphere, TOUCH_NODE_SCALE)
-    writeGroup(internRef.current, groups.intern, TOUCH_STAR4_SCALE)
-    writeGroup(certRef.current, groups.cert, TOUCH_STAR5_SCALE)
+    writeGroup(sphereRef.current, groups.sphere, TOUCH_NODE_SCALE, SPHERE_SCALE)
+    writeGroup(internRef.current, groups.intern, TOUCH_STAR4_SCALE, STAR_SCALE)
+    writeGroup(certRef.current, groups.cert, TOUCH_STAR5_SCALE, STAR_SCALE)
 
     // Park the label on the hovered node.
     const label = labelRef.current
@@ -586,10 +602,11 @@ export function Galaxy({
         const i3 = i * 3
 
         const spin = ORBIT_SPEED / Math.sqrt(Math.max(0.25, dust.arc[i]))
+        const dustT = t * DUST_MOTION
         const angle =
           dust.angle[i] +
-          t * spin +
-          Math.sin(t * DRIFT_SPEED + dust.phase[i]) * DRIFT_AMPLITUDE
+          dustT * spin +
+          Math.sin(dustT * DRIFT_SPEED + dust.phase[i]) * DRIFT_AMPLITUDE
         const [fx, fy] = fieldPoint(field, dust.arc[i], angle)
 
         const ox = dust.collapsed[i3]
@@ -697,8 +714,7 @@ export function Galaxy({
   // Off-galaxy: disable raycasting so empty-space clicks reach `onPointerMissed`
   // (ripples) instead of landing on the collapsed / expanding instance cloud.
   // Also drop hover — pointerOut won't fire once raycast is stubbed out.
-  // Fat sphere raycast: fingers need a big target; desktop gets a smaller halo
-  // so a near-miss still selects a star instead of stepping back.
+  // Fat sphere raycast: fingers need a big target; desktop stays tight to the star.
   useEffect(() => {
     const specs: Array<[InstancedMesh | null, number]> = [
       [sphereRef.current, NODE_RADIUS],

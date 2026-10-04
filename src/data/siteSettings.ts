@@ -12,6 +12,10 @@ export type SocialLink = {
 
 export type SiteSettings = {
   displayName: string
+  /** Small lead-in above the intro name, e.g. "hi, i'm". Empty hides it. */
+  greeting: string
+  /** Name above the intro star; falls back to `displayName`. */
+  greetingName: string
   locationLine: string
   tagline: string
   pageTitle: string
@@ -31,6 +35,10 @@ export type SiteSettings = {
   }
   hubTips: {
     introAria: string
+    /** Visible cue under the intro text; empty hides it. */
+    introHint: string
+    /** Touch wording for `introHint`; falls back to it when empty. */
+    introHintTouch: string
     filterByCategory: string
     hideFilters: string
   }

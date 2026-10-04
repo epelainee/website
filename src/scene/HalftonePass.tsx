@@ -32,6 +32,8 @@ const fragmentShader = /* glsl */ `
 
     float dist = distance(fragCoord, cellCentre);
     float dot_ = 1.0 - smoothstep(radius - 1.0, radius + 1.0, dist);
+    // The 1px edge fade would otherwise leave a grey pixel at every empty cell's centre.
+    dot_ *= step(1e-4, lum);
 
     outputColor = vec4(vec3(dot_), 1.0);
   }

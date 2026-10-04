@@ -1,8 +1,10 @@
 {
   "displayName": "Elizabeth Patricia Elaine",
-  "locationLine": "Currently in Vancouver, Canada",
-  "tagline": "An interactive map of the work,\ninterests, and experiences that shaped me.",
-  "pageTitle": "epelainee",
+  "greeting": "hi, i'm",
+  "greetingName": "Elaine",
+  "locationLine": "",
+  "tagline": "here's an interactive map of the work,\ninterests, and experiences that shaped me.",
+  "pageTitle": "Elizabeth Patricia Elaine | epelainee",
   "pageDescription": "Elizabeth Patricia Elaine; an interactive map of the work, interests, and experiences that shaped me.",
   "socialLinks": [
     {
@@ -29,6 +31,8 @@
   },
   "hubTips": {
     "introAria": "Burst the star to reveal the galaxy",
+    "introHint": "click the star to explore",
+    "introHintTouch": "tap the star to explore",
     "filterByCategory": "Filter by category",
     "hideFilters": "Hide filters"
   },

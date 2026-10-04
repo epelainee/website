@@ -24,8 +24,8 @@ export function HubHotspot() {
   const galaxy = phase === 'galaxy'
   const active = intro || galaxy
   // Intro star fills more of the screen than the settled core.
-  const rem = intro ? 9 : 4.5
-  const half = intro ? -4.5 : -2.25
+  const rem = intro ? 6 : 4.5
+  const half = intro ? -3 : -2.25
 
   const tip = ringOpen ? tips.hideFilters : tips.filterByCategory
 

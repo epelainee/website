@@ -157,9 +157,18 @@ content:
         label: Display name
         type: string
         required: true
+      - name: greeting
+        label: Greeting
+        type: string
+        description: Small lead-in above the intro name, e.g. "hi, i'm". Leave empty to hide.
+      - name: greetingName
+        label: Greeting name
+        type: string
+        description: Name above the intro star. Falls back to display name.
       - name: locationLine
         label: Location line
         type: string
+        description: Shown under the greeting. Leave empty to hide.
       - name: tagline
         label: Tagline
         type: text
@@ -226,6 +235,14 @@ content:
           - name: introAria
             label: Intro aria label
             type: string
+          - name: introHint
+            label: Intro hint (desktop)
+            type: string
+            description: Small cue under the intro text, e.g. "click the star to explore". Leave empty to hide.
+          - name: introHintTouch
+            label: Intro hint (touch)
+            type: string
+            description: Phone wording for the intro hint. Falls back to the desktop hint.
           - name: filterByCategory
             label: Filter by category
             type: string

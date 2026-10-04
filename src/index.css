@@ -105,14 +105,60 @@ canvas {
   }
 }
 
-@keyframes nav-help-in {
+/* Help manual: veil fades, rows dissolve up out of a blur like the intro chrome. */
+@keyframes nav-help-veil {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.97);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes nav-help-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+/* Intro "click the star" cue: arrives late so the first look stays clean, then breathes. */
+.intro-hint {
+  animation:
+    intro-hint-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) 2.2s both,
+    intro-hint-breathe 3.2s ease-in-out 3.4s infinite;
+}
+
+@keyframes intro-hint-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes intro-hint-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-hint {
+    animation: intro-hint-in 0.01s linear 2.2s both;
   }
 }
 

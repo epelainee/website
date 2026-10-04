@@ -1,6 +1,10 @@
 import type { CSSProperties } from 'react'
 import { CRUSH_DURATION, useStore } from '../state/store'
 import { useContent } from '../content/useContent'
+import {
+  INTRO_STAR_CENTER_CSS,
+  INTRO_STAR_HALF_HEIGHT_CSS,
+} from '../scene/CameraRig'
 import { SocialIconRow } from './SocialLinks'
 import { useViewport } from './useViewport'
 
@@ -8,6 +12,8 @@ const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
 /** Panel open/close dissolve — soft settle, not a hard cut. */
 const PANEL_MS = 520
 const DISSOLVE_BLUR = '12px'
+/** Intro text hugs the star: this far past its bottom spike tip. */
+const STAR_EDGE = `calc(${INTRO_STAR_CENTER_CSS} + ${INTRO_STAR_HALF_HEIGHT_CSS} + 1rem)`
 
 const chrome: CSSProperties = {
   position: 'fixed',
@@ -31,18 +37,22 @@ function solidName(name: string) {
 }
 
 /**
- * Identity chrome. Intro: top-left name + place, bottom-left tagline.
+ * Identity chrome. Intro: greeting + name, optional place, tagline, socials and
+ * a delayed "click the star" hint centred below the star.
  * Galaxy: bottom-centre name. Dissolves with the burst / panel.
  */
 export function NamePlate() {
   const { siteSettings } = useContent()
-  const { compact } = useViewport()
+  const { compact, coarse } = useViewport()
   const phase = useStore((s) => s.phase)
   const panelOpen = useStore((s) => s.selectedId !== null)
   const intro = phase === 'intro'
   const settled = phase === 'galaxy' || phase === 'crushing'
   const settledVisible = settled && !panelOpen
   const displayName = solidName(siteSettings.displayName)
+  const introHint = coarse
+    ? siteSettings.hubTips.introHintTouch
+    : siteSettings.hubTips.introHint
 
   const introDissolve = {
     opacity: intro ? 1 : 0,
@@ -60,76 +70,108 @@ export function NamePlate() {
         style={{
           ...chrome,
           left: 'max(1.25rem, env(safe-area-inset-left))',
-          top: 'max(1.25rem, env(safe-area-inset-top))',
-          // Compact: full width — icons stack under identity, not beside it.
-          // Wide: leave a gutter for the top-right icon row.
-          right: compact
-            ? 'max(1.25rem, env(safe-area-inset-right))'
-            : 'max(5.5rem, env(safe-area-inset-right))',
+          right: 'max(1.25rem, env(safe-area-inset-right))',
+          top: STAR_EDGE,
           display: 'flex',
           flexDirection: 'column',
-          gap: '0.3rem',
+          alignItems: 'center',
+          textAlign: 'center',
+          gap: '0.6rem',
           ...introDissolve,
         }}
       >
-        <p
+        {/* Same hierarchy as the galaxy page: one spaced headline, the rest small and dim. */}
+        <div
           style={{
-            ...nameStyle,
-            margin: 0,
-            whiteSpace: 'nowrap',
-            font: compact
-              ? '400 0.75rem/1 var(--mono)'
-              : nameStyle.font,
-            letterSpacing: compact ? '0.1em' : nameStyle.letterSpacing,
+            display: 'flex',
+            alignItems: 'baseline',
+            justifyContent: 'center',
+            gap: '0.6rem',
+            marginBottom: '0.3rem',
           }}
         >
-          {displayName}
-        </p>
-        <p
-          style={{
-            margin: 0,
-            font: '400 0.75rem/1.2 var(--mono)',
-            letterSpacing: '0.1em',
-            color: 'rgba(255, 255, 255, 0.78)',
-            maxWidth: compact ? '100%' : '16rem',
-            whiteSpace: 'normal',
-          }}
-        >
-          {siteSettings.locationLine}
-        </p>
-        {compact && (
-          <nav
-            aria-label="Social links"
-            aria-hidden={phase !== 'intro'}
+          {siteSettings.greeting && (
+            <p
+              style={{
+                margin: 0,
+                font: '400 0.6875rem/1 var(--mono)',
+                letterSpacing: '0.1em',
+                color: 'rgba(255, 255, 255, 0.6)',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {siteSettings.greeting}
+            </p>
+          )}
+          <p
             style={{
-              display: 'flex',
-              marginTop: '0.15rem',
-              pointerEvents: intro ? 'auto' : 'none',
+              ...nameStyle,
+              margin: 0,
+              font: compact
+                ? '400 0.9375rem/1.15 var(--mono)'
+                : '400 1.0625rem/1.15 var(--mono)',
+              letterSpacing: '0.18em',
+              // Tracking trails the last letter; pad the left so it stays centred.
+              paddingLeft: '0.18em',
             }}
           >
-            <SocialIconRow gap="0.65rem" />
-          </nav>
+            {solidName(siteSettings.greetingName)}
+          </p>
+        </div>
+        {siteSettings.locationLine?.trim() && (
+          <p
+            style={{
+              margin: 0,
+              font: '400 0.625rem/1.2 var(--mono)',
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'rgba(255, 255, 255, 0.6)',
+              maxWidth: compact ? '100%' : '18rem',
+            }}
+          >
+            {siteSettings.locationLine}
+          </p>
+        )}
+        <p
+          style={{
+            margin: 0,
+            font: compact
+              ? '400 0.6875rem/1.6 var(--mono)'
+              : '400 0.75rem/1.6 var(--mono)',
+            letterSpacing: '0.06em',
+            color: 'rgba(255, 255, 255, 0.75)',
+            maxWidth: 'min(24rem, 100%)',
+            whiteSpace: 'pre-line',
+          }}
+        >
+          {siteSettings.tagline}
+        </p>
+        <nav
+          aria-label="Social links"
+          aria-hidden={phase !== 'intro'}
+          style={{
+            display: 'flex',
+            marginTop: '0.2rem',
+            pointerEvents: intro ? 'auto' : 'none',
+          }}
+        >
+          <SocialIconRow gap={compact ? '0.65rem' : '0.85rem'} />
+        </nav>
+        {introHint && (
+          <p
+            className="intro-hint"
+            style={{
+              margin: '0.5rem 0 0',
+              font: '400 0.625rem/1 var(--mono)',
+              letterSpacing: '0.14em',
+              color: 'rgba(255, 255, 255, 0.5)',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {introHint}
+          </p>
         )}
       </div>
-
-      <p
-        aria-hidden={phase !== 'intro'}
-        style={{
-          ...chrome,
-          left: 'max(1.25rem, env(safe-area-inset-left))',
-          right: 'max(1.25rem, env(safe-area-inset-right))',
-          bottom: 'max(1.25rem, env(safe-area-inset-bottom))',
-          font: '400 0.6875rem/1.45 var(--mono)',
-          letterSpacing: '0.06em',
-          maxWidth: compact
-            ? 'min(22rem, calc(100vw - 2.5rem))'
-            : 'min(22rem, calc(100vw - 12rem))',
-          whiteSpace: 'pre-line',
-          ...introDissolve,
-        }}
-      >
-        {siteSettings.tagline}
-      </p>
 
       <div
         aria-hidden={!settledVisible}

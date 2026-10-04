@@ -17,7 +17,7 @@ import { NavHelp } from './ui/NavHelp'
 import { ExportList } from './ui/ExportList'
 import { dustCountFor, shellCountFor, useViewport } from './ui/useViewport'
 import { useBackKey } from './ui/useBackKey'
-import { CRUSH_DURATION, useStore } from './state/store'
+import { useStore } from './state/store'
 
 export default function App() {
   const phase = useStore((s) => s.phase)
@@ -26,7 +26,7 @@ export default function App() {
   const helpOpen = useStore((s) => s.helpOpen)
   const setHelpOpen = useStore((s) => s.setHelpOpen)
   const back = useStore((s) => s.back)
-  const { coarse, width, compact } = useViewport()
+  const { coarse, width } = useViewport()
   useBackKey()
 
   const galaxySettled = phase === 'galaxy'
@@ -75,34 +75,6 @@ export default function App() {
         <LocalClock />
         <GalaxySearch />
         <NavHelp />
-
-        {/* Intro copyright (wide). Dematerialises with the burst. */}
-        {!compact && (
-          <p
-            aria-hidden={phase !== 'intro'}
-            style={{
-              position: 'fixed',
-              right: 'max(1.25rem, env(safe-area-inset-right))',
-              bottom: 'max(1.25rem, env(safe-area-inset-bottom))',
-              zIndex: 20,
-              margin: 0,
-              pointerEvents: 'none',
-              font: '400 0.5625rem/1 var(--mono)',
-              letterSpacing: '0.06em',
-              color: 'rgba(255, 255, 255, 0.55)',
-              textShadow: '0 0 8px #000',
-              whiteSpace: 'nowrap',
-              opacity: phase === 'intro' ? 1 : 0,
-              filter: phase === 'intro' ? 'blur(0)' : 'blur(6px)',
-              transition: [
-                `opacity ${CRUSH_DURATION}s cubic-bezier(0.65, 0, 0.35, 1)`,
-                `filter ${CRUSH_DURATION}s cubic-bezier(0.65, 0, 0.35, 1)`,
-              ].join(', '),
-            }}
-          >
-            ©️ 2026 Elizabeth Patricia Elaine
-          </p>
-        )}
 
         {/* Bottom-right chrome: help (?), plus touch back. */}
         {galaxyChrome && (

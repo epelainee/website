@@ -1,7 +1,5 @@
 import { create } from 'zustand'
 import type { CategoryId } from '../data/categories'
-import { hasSeenNavHelp, markNavHelpSeen } from './navHelpSeen'
-
 export type Phase = 'intro' | 'crushing' | 'galaxy'
 
 /** Crush duration in seconds. Shared by the store's timer and the scene's easing. */
@@ -90,16 +88,7 @@ export const useStore = create<State>((set, get) => ({
   crush: () => {
     if (get().phase !== 'intro') return
     set({ phase: 'crushing' })
-    setTimeout(() => {
-      set({ phase: 'galaxy' })
-      // First visit: show the manual after the field lands. Deferred so the
-      // burst click cannot land on a dialog that mounts under the cursor.
-      if (hasSeenNavHelp()) return
-      setTimeout(() => {
-        if (get().phase !== 'galaxy' || hasSeenNavHelp()) return
-        set({ helpOpen: true })
-      }, 600)
-    }, CRUSH_DURATION * 1000)
+    setTimeout(() => set({ phase: 'galaxy' }), CRUSH_DURATION * 1000)
   },
 
   setHovered: (id) => set({ hoveredId: id }),
@@ -146,10 +135,7 @@ export const useStore = create<State>((set, get) => ({
    */
   back: () =>
     set((s) => {
-      if (s.helpOpen) {
-        markNavHelpSeen()
-        return { helpOpen: false }
-      }
+      if (s.helpOpen) return { helpOpen: false }
       if (s.exportOpen) return { exportOpen: false }
       if (s.selectedId !== null) return { selectedId: null, hoveredId: null }
       if (s.searchQuery.trim()) return { searchQuery: '', hoveredId: null }
